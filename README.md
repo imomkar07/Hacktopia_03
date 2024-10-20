@@ -48,11 +48,6 @@ Welcome to the Course Website Project! This platform allows users to access vari
 
 ### 👨‍🏫 User Pages
 
-
-
-
-<img width="1440" alt="Screenshot 2024-10-20 at 8 36 30 PM" src="https://github.com/user-attachments/assets/0a7e5db4-31ed-45d7-b657-87202ccaf31e">
-
 <p align="center">
 <img width="300" height="250" alt="Screenshot 2024-07-12 at 10 13 51 AM" src="https://github.com/user-attachments/assets/89b682aa-b7c6-4151-adb3-0d000fe67cc7">
 <img width="300" height="250" alt="Screenshot 2024-07-12 at 10 14 09 AM" src="https://github.com/user-attachments/assets/1505da86-7218-48ae-868e-5da0fdf9316f">
