@@ -58,7 +58,7 @@ Welcome to the Course Website Project! This platform allows users to access vari
 
 ### 👨‍🏫 Admin Pages
 <p align="center">
-<img width="300" height="500" alt="Screenshot 2024-07-12 at 10 13 51 AM" src="https://github.com/user-attachments/assets/e8ae35c1-2104-4792-98cd-5da1de46a82d">
+<img width="300" height="250" alt="Screenshot 2024-07-12 at 10 13 51 AM" src="https://github.com/user-attachments/assets/e8ae35c1-2104-4792-98cd-5da1de46a82d">
 <img width="300" height="250" alt="Screenshot 2024-07-12 at 10 22 51 AM" src="https://github.com/user-attachments/assets/0a7e5db4-31ed-45d7-b657-87202ccaf31e">
 <img width="300" height="250" alt="Screenshot 2024-07-12 at 10 13 51 AM" src="https://github.com/user-attachments/assets/0ed7c83d-c9e9-4e5a-b9cd-b7d5ab31127b">
 </p>
