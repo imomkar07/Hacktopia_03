@@ -106,7 +106,63 @@
     <footer class="footer">
         &copy; Copyright by <span>Lalit Deore</span> | All rights reserved!
     </footer>
-    
+
     <script src="js/script.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+          const form = document.getElementById("profile-form");
+          form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+  
+            const name = document.getElementById("name").value;
+            const email = document.getElementById("email").value;
+            const profilePicInput = document.getElementById("profile-pic");
+            const profilePic = profilePicInput.files[0];
+  
+            const reader = new FileReader();
+            reader.onload = function (e) {
+              const profileData = {
+                name: name,
+                email: email,
+                profilePic: e.target.result,
+              };
+              localStorage.setItem("profileData", JSON.stringify(profileData));
+              alert("Profile updated successfully");
+              updateProfileDisplay(profileData);
+            };
+            if (profilePic) {
+              reader.readAsDataURL(profilePic);
+            } else {
+              const profileData = {
+                name: name,
+                email: email,
+                profilePic: "",
+              };
+              localStorage.setItem("profileData", JSON.stringify(profileData));
+              alert("Profile updated successfully");
+              updateProfileDisplay(profileData);
+            }
+          });
+  
+          function updateProfileDisplay(profileData) {
+            document
+              .querySelectorAll(".profile .name")
+              .forEach((el) => (el.textContent = profileData.name));
+            document
+              .querySelectorAll(".profile .image")
+              .forEach((el) => (el.src = profileData.profilePic || ""));
+          }
+  
+          // Fetch and load existing profile data on page load
+          function loadProfile() {
+            const profileData = JSON.parse(localStorage.getItem("profileData"));
+            if (profileData) {
+              updateProfileDisplay(profileData);
+            }
+          }
+  
+          loadProfile();
+        });
+      </script>
 </body>
 </html>
