@@ -72,4 +72,56 @@
     color: white;
     align-self: flex-end;
   }
+
+/* Message input form */
+#replyForm {
+    display: flex;
+    border-top: 1px solid #ddd;
+    background: #f1f1f1;
+   
+}
+
+#replyInput {
+    flex-grow: 1;
+    border: none;
+    padding: 10px;
+    font-size: 14px;
+    border-radius: 0;
+    outline: none;
+}
+
+.receive-btn {
+    background-color: #007bff; 
+    color: white;            
+    border: none;             
+    padding: 10px 20px;      
+    border-radius: 5px;       
+    font-size: 16px;         
+    cursor: pointer;         
+    transition: background-color 0.3s; 
+  }
   
+  /* Hover effect for the receive message button */
+  .receive-btn:hover {
+    background-color: #0056b3; /* Slightly darker shade on hover */
+  }
+  
+
+#replyInput:focus {
+    outline: none;
+    box-shadow: inset 0 0 2px 2px rgba(0, 0, 0, 0.1);
+}
+
+#replyForm button {
+    background-color: #007bff;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#replyForm button:hover {
+    background-color: #0056b3;
+}
+
