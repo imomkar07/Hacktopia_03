@@ -137,5 +137,25 @@
     </footer>
     <!-- Custom JS file link -->
     <script src="js/script.js"></script>
+    <script>
+      document
+        .getElementById("videoFiles")
+        .addEventListener("change", function () {
+          const videoFiles = this.files;
+          const videoThumbnailsContainer =
+            document.getElementById("videoThumbnails");
+          videoThumbnailsContainer.innerHTML = "";
+          for (let i = 0; i < videoFiles.length; i++) {
+            const div = document.createElement("div");
+            div.classList.add("video-thumbnail");
+            div.innerHTML = `
+                <p>${videoFiles[i].name}</p>
+                <input type="file" accept="image/*" class="video-thumbnail-input" data-video-index="${i}" />
+                <input type="text" placeholder="Enter Video Heading" class="videoHeadings" data-video-index="${i}" />
+            `;
+            videoThumbnailsContainer.appendChild(div);
+          }
+        });
+    </script>
   </body>
 </html>
