@@ -74,7 +74,63 @@
     text-transform: capitalize;
  }
 
- .header{
+ .inline-btn,
+.inline-option-btn,
+.inline-delete-btn,
+.btn,
+.delete-btn,
+.option-btn{
+   border-radius: .5rem;
+   color:#fff;
+   font-size: 1.8rem;
+   cursor: pointer;
+   text-transform: capitalize;
+   padding:1rem 3rem;
+   text-align: center;
+   margin-top: 1rem;
+}
+
+.btn,
+.delete-btn,
+.option-btn{
+   display: block;
+   width: 100%;
+}
+
+.inline-btn,
+.inline-option-btn,
+.inline-delete-btn{
+   display: inline-block;
+}
+
+.btn,
+.inline-btn{
+   background-color: var(--main-color);
+}
+
+.option-btn,
+.inline-option-btn{
+   background-color:var(--orange);
+}
+
+
+
+.inline-btn:hover,
+.inline-option-btn:hover,
+.inline-delete-btn:hover,
+.btn:hover,
+.delete-btn:hover,
+.option-btn:hover{
+   background-color: var(--black);
+   color: var(--white);
+}
+
+.flex-btn{
+   display: flex;
+   gap: 1rem;
+}
+
+.header{
     position: sticky;
     top:0; left:0; right: 0;
     background-color: var(--white);
@@ -82,7 +138,7 @@
     border-bottom: var(--border);
  }
 
- .header .flex{
+.header .flex{
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -90,12 +146,12 @@
     padding: 1.5rem 2rem;
  }
 
- .header .flex .logo{
+.header .flex .logo{
     font-size: 2.5rem;
     color: var(--black);
  }
 
- .header .flex .search-form{
+.header .flex .search-form{
     width: 50rem;
     border-radius: .5rem;
     background-color: var(--light-bg);
@@ -104,7 +160,7 @@
     gap:2rem;
  }
 
- .header .flex .search-form input{
+.header .flex .search-form input{
     width: 100%;
     font-size: 1.8rem;
     color:var(--black);
