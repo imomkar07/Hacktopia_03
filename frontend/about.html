@@ -262,3 +262,34 @@
           </div>
         </div>
       </section>
+      <footer class="footer">
+        &copy; Copyright by <span>Lalit Deore</span> | All rights reserved!
+      </footer>
+  
+      <!-- custom js file link  -->
+      <script>
+        document.addEventListener("DOMContentLoaded", () => {
+          function updateProfileDisplay(profileData) {
+            document
+              .querySelectorAll(".profile .name")
+              .forEach((el) => (el.textContent = profileData.name));
+            document
+              .querySelectorAll(".profile .image")
+              .forEach((el) => (el.src = profileData.profilePic || ""));
+          }
+  
+          function loadProfile() {
+            const profileData = JSON.parse(localStorage.getItem("profileData"));
+            if (profileData) {
+              updateProfileDisplay(profileData);
+            }
+          }
+  
+          loadProfile();
+        });
+      </script>
+  
+      <script src="js/script.js"></script>
+    </body>
+  </html>
+  
