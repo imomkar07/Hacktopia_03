@@ -701,6 +701,50 @@
     animation-play-state: paused;
     }
 
+    .box {
+        min-width: 250px;
+        margin: 0 15px;
+        padding: 20px;
+        background-color: white;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        transform: rotateY(10deg);
+        transition: transform 0.5s ease;
+      }
+      
+      .box:hover {
+        transform: rotateY(0deg) scale(1.05);
+      }
+      
+      .student {
+        display: flex;
+        align-items: center;
+        margin-top: 15px;
+      }
+      
+      .student img {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        margin-right: 15px;
+      }
+      
+      .stars i {
+        color: #f39c12;
+      }
+      
+      .box p {
+        font-size: 14px;
+        color: #333;
+      }
+      
+      h3 {
+        margin: 0;
+        font-size: 18px;
+        color: #333;
+      }
+      
+  
 
 .form-container{
     min-height: calc(100vh - 20rem);
