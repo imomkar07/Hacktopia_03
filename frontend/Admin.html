@@ -51,3 +51,38 @@
           >
         </nav>
       </div>
+      <section class="create_playlist">
+        <div class="container">
+          <h2>Create Video Playlist</h2>
+          <input
+            type="text"
+            id="playlistName"
+            placeholder="Enter Playlist Name"
+          />
+          <input type="file" id="playlistImage" accept="image/*" />
+          <textarea
+            id="playlistDescription"
+            placeholder="Enter Playlist Description"
+          ></textarea>
+          <input type="file" id="videoFiles" multiple accept="video/*" />
+          <div id="videoThumbnails"></div>
+          <input
+            type="button"
+            class="Submit"
+            value="Submit Playlist"
+            onclick="submitPlaylist()"
+          />
+          <input
+            type="button"
+            class="Submit"
+            value="Update Playlist"
+            onclick="updatePlaylist()"
+          />
+        </div>
+      </section>
+      <footer class="footer">
+        &copy; Copyright by <span>Lalit Deore</span> | All rights reserved!
+      </footer>
+      <!-- Custom JS file link -->
+      <script src="js/script.js"></script>
+      
