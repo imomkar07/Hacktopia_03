@@ -57,6 +57,56 @@
       </nav>
     </div>
 
-</script>
+    <section class="form-container">
+        <form
+          id="profile-form"
+          action=""
+          method="post"
+          enctype="multipart/form-data"
+        >
+          <h3>update profile</h3>
+          <p>create name</p>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            placeholder="Enter your name"
+            maxlength="50"
+            class="box"
+          />
+          <p>create email</p>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="Enter your email"
+            maxlength="50"
+            class="box"
+          />
+          <p>upload pic</p>
+          <input type="file" id="profile-pic" accept="image/*" class="box" />
+          <input type="submit" value="upload profile" name="submit" class="btn" />
+        </form>
+    </section>
+      <div class="next">
+        <h2>
+          If You aleready create a profile then then press nest to go on home page
+          :
+        </h2>
+        <a href="home.html"
+          ><input
+            class="Submit"
+            type="submit"
+            value="Next"
+            name="submit"
+            class="btn"
+        /></a>
+    </div>
+
+    <footer class="footer">
+        &copy; Copyright by <span>Lalit Deore</span> | All rights reserved!
+    </footer>
+    
+    <script src="js/script.js"></script>
 </body>
 </html>
