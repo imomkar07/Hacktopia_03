@@ -67,5 +67,49 @@
           </nav>
     </div>
 
+    <div
+      id="message"
+      style="
+        display: none;
+        background-color: #f8d7da;
+        color: #721c24;
+        padding: 10px;
+        margin-top: 10px;
+        text-align: center;
+      "
+    >
+      <h2>Please login first.</h2>
+    </div>
+
+    <section class="form-container">
+        <form action="/login" method="post">
+          <h3>Login now</h3>
+          <p>Your email <span>*</span></p>
+          <input
+            type="email"
+            name="email"
+            id="loginEmail"
+            placeholder="Enter your email"
+            required
+            maxlength="50"
+            class="box"
+          />
+          <p>Your password <span>*</span></p>
+          <input
+            type="password"
+            name="password"
+            id="loginPassword"
+            placeholder="Enter your password"
+            required
+            maxlength="20"
+            class="box"
+          />
+          <p>
+            I don't have an account?
+            <a href="signup.html">Sign up</a>
+          </p>
+          <button type="submit" class="loginbtn">Login</button>
+        </form>
+    </section>
 </body>
 </html>
