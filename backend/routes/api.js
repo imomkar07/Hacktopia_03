@@ -177,3 +177,114 @@ router.put('/playlists/:id/videos', upload.array('videos'), async (req, res) => 
         res.status(500).json({ error: 'An error occurred while adding videos to the playlist' });
     }
 });
+
+router.get('/profile', async (req, res) => {
+    try {
+        const profile = await Profile.findById('60c72b2f9b1e8c3d4c8b4567'); // Replace with the actual profile ID
+        res.json(profile);
+    } catch (error) {
+        res.json({ success: false, error });
+    }
+});
+
+// Endpoint to update profile data
+router.post('/update_profile', upload.single('profilePic'), async (req, res) => {
+    const { name, email } = req.body;
+    const profilePic = req.file ? req.file.path : '';
+
+    try {
+        const profile = await Profile.findByIdAndUpdate(
+            '60c72b2f9b1e8c3d4c8b4567', // Replace with the actual profile ID
+            { name, email, profilePic },
+            { new: true, upsert: true }
+        );
+        res.json({ success: true, profile });
+    } catch (error) {
+        res.json({ success: false, error });
+    }
+});
+
+
+
+
+
+router.delete('/playlists/:playlistId', async (req, res) => {
+    const playlistId = req.params.playlistId;
+    try {
+        // Find the playlist by ID and delete it
+        await Playlist.findByIdAndDelete(playlistId);
+        res.status(200).send('Playlist deleted successfully!');
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('An error occurred while deleting the playlist.');
+    }
+});
+
+router.get('/:playlistId', async (req, res) => {
+    try {
+        const playlist = await Playlist.findById(req.params.playlistId);
+        if (!playlist) {
+            return res.status(404).json({ message: 'Playlist not found' });
+        }
+        res.json(playlist);
+    } catch (error) {
+        console.error('Error fetching playlist details:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+});
+
+
+
+
+
+router.post('/update', upload.fields([{ name: 'playlistImage', maxCount: 1 }, { name: 'videos', maxCount: 10 }, { name: 'videoThumbnails', maxCount: 10 }, { name: 'videoHeadings' }]), async (req, res) => {
+    /*const { playlistName, playlistDescription, videoHeadings } = req.body;
+    const playlistImage = req.files['playlistImage'] ? req.files['playlistImage'][0] : null;
+    const videos = req.files['videos'];
+    const videoThumbnails = req.files['videoThumbnails'];*/
+
+    try {
+        const { playlistName, playlistDescription } = req.body;
+        const playlistImage = req.files['playlistImage'][0];
+        const videos = req.files['videos'];
+        const videoThumbnails = req.files['videoThumbnails'];
+        const videoHeadings = req.body['videoHeadings'];
+        // Find the playlist in the database by its name
+        const existingPlaylist = await Playlist.findOne({ name: playlistName });
+
+        if (!existingPlaylist) {
+            // If the playlist doesn't exist, return an error
+            return res.status(404).json({ success: false, message: 'Playlist not found' });
+        }
+
+        // Update the playlist details
+        existingPlaylist.description = playlistDescription;
+
+        // Update the playlist image if provided
+        if (playlistImage) {
+            existingPlaylist.image = { filename: playlistImage.filename, path: playlistImage.path };
+        }
+
+        // Update video details
+        for (let i = 0; i < videos.length; i++) {
+            existingPlaylist.videos.push({
+                filename: videos[i].filename, // Use filename instead of videoUrl
+                contentType: videos[i].mimetype, // Use contentType instead of videoUrl
+                heading: videoHeadings[i],
+                thumbnail: videoThumbnails[i] ? {
+                    filename: videoThumbnails[i].filename,
+                    contentType: videoThumbnails[i].mimetype,
+                } : null,
+            });
+        }
+
+        // Save the updated playlist to the database
+        await existingPlaylist.save();
+
+        // Send a success response
+        res.status(200).json({ success: true, message: 'Playlist updated successfully' });
+    } catch (error) {
+        console.error('Error updating playlist:', error);
+        res.status(500).json({ success: false, message: 'An error occurred while updating the playlist' });
+    }
+});
