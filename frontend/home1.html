@@ -73,5 +73,77 @@
             </nav>
           </div>
 
+        <div
+            id="message"
+            style="
+            display: none;
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 10px;
+            margin-top: 10px;
+            text-align: center;
+            "
+        >
+        <h2>Please login first.</h2>
+    </div>
+
+    <section class="home" id="home">
+        <div class="home-img">
+          <img src="images/home_page.png" alt="" />
+        </div>
+        <div class="home-content heading">
+          <h3>Hello Learners<span class="wave">👋</span></h3>
+          <h3>And Welcome <span class="multiple-text"></span></h3>
+          <p>
+            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolor non
+            perferendis, voluptate vitae porro quo et saepe nesciunt animi quis
+            adipisci nulla laborum architecto. Adipisci assumenda iusto mollitia
+            libero expedita?
+          </p>
+        </div>
+      </section>
+
+      <section class="courses">
+        <h1 class="heading">our courses</h1>
+        <section>
+          <h1>Video Playlists</h1>
+          <div id="playlists" class="playlists-container"></div>
+  
+          <div id="videoModal" class="modal">
+            <span class="close">&times;</span>
+            <div class="modal-content">
+              <img
+                id="videoThumbnail"
+                class="video-thumbnail"
+                src=""
+                alt="Video Thumbnail"
+              />
+              <video id="modalVideo" controls></video>
+            </div>
+          </div>
+        </section>
+
+        <div class="more-btn">
+            <a onclick="showMessage()" class="inline-option-btn"
+              >view all courses</a
+            >
+          </div>
+        </section>
+
+        <section class="courses">
+            <h1 class="heading">our Teachers</h1>
+            <div class="box-container" id="profilesContainer">
+              <!-- Existing tutor profiles will be dynamically added here -->
+            </div>
+            <div class="more-btn">
+              <a
+                href="teacher_profile1.html"
+                onclick="showMessage()"
+                class="inline-option-btn"
+                >view all teachers</a
+              >
+            </div>
+          </section>
+          
     </body>
 </html> 
