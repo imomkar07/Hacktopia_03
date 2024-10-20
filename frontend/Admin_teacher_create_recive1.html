@@ -115,6 +115,25 @@
     <div id="profilesContainer">
         <!-- Profiles will be dynamically added here -->
     </div>
-  
+    <div class="chat-form" id="chatForm">
+        <div class="chat-header">
+          <span id="chatProfileName"></span>
+          <button id="closeChatForm">&times;</button>
+        </div>
+        <div class="chat-messages" id="chatMessages"></div>
+        <form id="replyForm">
+          <input
+            type="text"
+            id="replyInput"
+            name="message"
+            placeholder="Type a message..."
+            required
+          />
+          <button type="submit">Reply</button>
+        </form>
+    </div>
+    <footer class="footer">
+        &copy; Copyright by <span>Lalit Deore</span> | All rights reserved!
+    </footer>
   </body>
 </html>
