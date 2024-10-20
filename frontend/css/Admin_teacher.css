@@ -65,3 +65,78 @@
   .close-btn:hover {
     color: #333;
   }
+
+/* Profile Cards Styling */
+  #profilesContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    margin: 20px auto;
+    max-width: 1200px;
+  }
+
+  .tutor {
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .tutor img {
+    width: 100px; /* Fixing the image size */
+    height: 100px; /* Fixing the image size */
+    object-fit: cover;
+    border-radius: 50%; /* Make the image circular */
+    margin: 20px auto; /* Center the image */
+    display: block; /* Center the image */
+  }
+
+  .tutor div {
+    padding: 15px;
+    text-align: center; /* Center the text */
+  }
+
+  .tutor h3 {
+    margin: 0;
+    font-size: 22px;
+    color: #333;
+  }
+
+  .tutor p {
+    margin: 5px 0;
+    font-size: 16px;
+    color: #555;
+  }
+
+  .tutor h4 {
+    margin: 10px 0;
+    font-size: 18px;
+    color: #777;
+  }
+
+  .tutor:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  }
+
+  .icons {
+    text-align: center;
+    margin: 15px 0;
+  }
+
+  .icons a {
+    display: inline-block;
+    margin: 0 10px;
+    font-size: 24px;
+    color: white; /* White color for icons */
+    background-color: #007bff; /* Adding a background color for contrast */
+    padding: 10px;
+    border-radius: 50%; /* Make icon background circular */
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  .icons a:hover {
+    background-color: #0056b3; /* Darken on hover */
+    color: #fff; /* Maintain white color on hover */
+  }
