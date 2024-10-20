@@ -125,3 +125,28 @@
     background-color: #0056b3;
 }
 
+/* Responsive styling for phones */
+@media (max-width: 600px) {
+  .chat-form {
+      max-width: 100%; 
+      width: calc(100% - 40px); 
+      bottom: 10px;
+      right: 10px;
+      left: 10px;
+      border-radius: 10px; 
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15); 
+  }
+
+  .chat-header {
+      padding: 12px; 
+  }
+
+  #chatProfileName {
+      font-size: 18px; 
+  }
+
+  #closeChatForm {
+      font-size: 22px; 
+  }
+}
+
