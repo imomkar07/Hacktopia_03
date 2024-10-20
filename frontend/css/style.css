@@ -455,6 +455,39 @@
   }
  
 
+.chat img{
+    background: none;
+    height: 30px;
+    margin-right: 1rem;
+    display: inline;
+}
+ 
+.AI{
+    display: flex;
+}
+
+.side-bar .navbar a i{
+    margin-right: 1.5rem;
+    color:var(--main-color);
+    transition: .2s linear;
+ }
+ 
+ .side-bar .navbar a span{
+    color:var(--light-color);
+ }
+ 
+ .side-bar .navbar a:hover{
+    background-color: var(--light-bg);
+ }
+ 
+ .side-bar .navbar a:hover i{
+    margin-right: 2.5rem;
+ }
+ 
+ .side-bar.active{
+    left: -30rem;
+ }
+ 
 .form-container{
     min-height: calc(100vh - 20rem);
     display: flex;
