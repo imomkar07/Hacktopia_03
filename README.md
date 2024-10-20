@@ -68,3 +68,9 @@ Welcome to the Course Website Project! This platform allows users to access vari
 <img width="300" height="250" alt="Screenshot 2024-07-12 at 10 13 51 AM" src="https://github.com/user-attachments/assets/0ed7c83d-c9e9-4e5a-b9cd-b7d5ab31127b">
  <img width="300" height="250" alt="Screenshot 2024-07-12 at 10 13 51 AM" src="https://github.com/user-attachments/assets/b0646c8f-c440-4ed7-a2b1-9f44053beaec">
 </p>
+
+## 🎥 Video Explanation
+Drive Link : https://drive.google.com/file/d/14hwjKGfab9fJ0KkqVVASkiGr-JNpEbGT/view?usp=drive_link
+
+###Thank You
+
