@@ -1,4 +1,4 @@
-# 📚 Course Website Project
+ # 📚 Course Website Project
 
 Welcome to the Course Website Project! This platform allows users to access various online courses, interact with instructors, and utilize AI-assisted learning tools. Below is an overview of the features and functionalities available for both users and administrators.
 
@@ -47,26 +47,23 @@ Welcome to the Course Website Project! This platform allows users to access vari
 ## 📸 Screenshots
 
 ### 👨‍🏫 User Pages
+
+
+
+
+<img width="1440" alt="Screenshot 2024-10-20 at 8 36 30 PM" src="https://github.com/user-attachments/assets/0a7e5db4-31ed-45d7-b657-87202ccaf31e">
+
 <p align="center">
-<img width="300" height="250" alt="Screenshot 2024-07-12 at 10 13 51 AM" src="https://github.com/user-attachments/assets/6ebe54cd-a95c-46d1-a029-66fd7967b4d8">
-<img width="300" height="250" alt="Screenshot 2024-07-12 at 10 14 09 AM" src="https://github.com/user-attachments/assets/4d08b102-038e-4c65-af86-b453bd71c97d">
-<img width="300" height="250" alt="Screenshot 2024-07-12 at 10 15 36 AM" src="https://github.com/user-attachments/assets/78422c1d-b53e-4e6d-bc8c-7343bdbf94da">
-<img width="300" height="500" alt="Screenshot 2024-07-12 at 10 13 51 AM" src="https://github.com/user-attachments/assets/de28f592-14e5-47f8-a0d7-54620d2ecbe3">
-<img width="300" height="500" alt="Screenshot 2024-07-12 at 10 13 51 AM" src="https://github.com/user-attachments/assets/68c75746-e9ca-4b42-927d-9bd4a2abb753">
-<img width="300" height="500" alt="Screenshot 2024-07-12 at 10 13 51 AM" src="https://github.com/user-attachments/assets/08bb1b5a-e72b-42db-b029-bb5f7d47b9b1">
-<img width="300" height="250" alt="Screenshot 2024-07-12 at 10 22 51 AM" src="https://github.com/user-attachments/assets/4fd5e5cb-d573-46bf-9c77-4999113f6ce7">
-<img width="300" height="250" alt="Screenshot 2024-07-12 at 10 13 51 AM" src="https://github.com/user-attachments/assets/a264bae5-ad47-4cdb-a0f1-f4647afce433">
-<img width="300" height="250" alt="Screenshot 2024-07-12 at 10 13 51 AM" src="https://github.com/user-attachments/assets/0163b1e8-4072-435f-849f-4c9dbed9287b">
-<img width="300" height="250" alt="Screenshot 2024-07-12 at 10 13 51 AM" src="https://github.com/user-attachments/assets/6b6bfc2d-c218-4784-a736-7d05fe039ed4">
+<img width="300" height="250" alt="Screenshot 2024-07-12 at 10 13 51 AM" src="https://github.com/user-attachments/assets/89b682aa-b7c6-4151-adb3-0d000fe67cc7">
+<img width="300" height="250" alt="Screenshot 2024-07-12 at 10 14 09 AM" src="https://github.com/user-attachments/assets/1505da86-7218-48ae-868e-5da0fdf9316f">
+<img width="300" height="250" alt="Screenshot 2024-07-12 at 10 15 36 AM" src="https://github.com/user-attachments/assets/c49dfe83-60af-4e4d-82c6-49173c574d04">
+<img width="300" height="500" alt="Screenshot 2024-07-12 at 10 13 51 AM" src="https://github.com/user-attachments/assets/1cdece65-9f06-4b66-b017-ef3e0b6098a4">
+<img width="300" height="500" alt="Screenshot 2024-07-12 at 10 13 51 AM" src="https://github.com/user-attachments/assets/c44ee70c-a7eb-4bfa-84b4-464e959aeb29">
 </p>
 
 ### 👨‍🏫 Admin Pages
 <p align="center">
-<img width="300" height="250 alt="Screenshot 2024-07-12 at 10 13 51 AM" src="https://github.com/user-attachments/assets/1b4af74d-8cc5-41fa-a6d4-172badfb7a2a">
-<img width="300" height="250 alt="Screenshot 2024-07-12 at 10 13 51 AM" src="https://github.com/user-attachments/assets/5fdfc954-c8aa-4c9e-acb1-cb7a3c5e95a9">
-</p>
-<p align="center">
-<img width="300" height="500 alt="Screenshot 2024-07-12 at 10 13 51 AM" src="https://github.com/user-attachments/assets/afed645c-26ac-4086-a0e2-017705b51e3f">
-<img width="300" height="500 alt="Screenshot 2024-07-12 at 10 13 51 AM" src="https://github.com/user-attachments/assets/3261fa55-46eb-4880-86ad-40d6c3dd8ccd">
-  <img width="300" height="500 alt="Screenshot 2024-07-12 at 10 13 51 AM" src="https://github.com/user-attachments/assets/c720083b-4879-4b01-88f5-73c469d3705d">
+<img width="300" height="500" alt="Screenshot 2024-07-12 at 10 13 51 AM" src="https://github.com/user-attachments/assets/e8ae35c1-2104-4792-98cd-5da1de46a82d">
+<img width="300" height="250" alt="Screenshot 2024-07-12 at 10 22 51 AM" src="https://github.com/user-attachments/assets/0a7e5db4-31ed-45d7-b657-87202ccaf31e">
+<img width="300" height="250" alt="Screenshot 2024-07-12 at 10 13 51 AM" src="https://github.com/user-attachments/assets/0ed7c83d-c9e9-4e5a-b9cd-b7d5ab31127b">
 </p>
