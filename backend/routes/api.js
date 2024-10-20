@@ -145,3 +145,35 @@ router.put('/playlists/:id', upload.single('playlistImage'), async (req, res) =>
     }
 });
 
+router.put('/playlists/:id/videos', upload.array('videos'), async (req, res) => {
+    try {
+        const playlistId = req.params.id;
+
+        // Fetch the playlist from the database
+        let playlist = await Playlist.findById(playlistId);
+
+        if (!playlist) {
+            return res.status(404).json({ error: 'Playlist not found' });
+        }
+
+        // Handle video files
+        if (req.files && req.files.length > 0) {
+            const videos = req.files.map(file => ({
+                filename: file.filename,
+                contentType: file.mimetype,
+                heading: req.body.headings ? req.body.headings[req.files.indexOf(file)] : "Untitled Video"
+            }));
+            playlist.videos = playlist.videos.concat(videos); // Append the new videos to the existing playlist videos
+        }
+
+        // Save the updated playlist
+        await playlist.save();
+
+        console.log('Updated playlist with new videos:', playlist);
+
+        res.status(200).json({ message: 'Videos added to playlist successfully', playlist });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'An error occurred while adding videos to the playlist' });
+    }
+});
