@@ -57,8 +57,8 @@ Welcome to the Course Website Project! This platform allows users to access vari
 <img width="300" height="250" alt="Screenshot 2024-07-12 at 10 13 51 AM" src="https://github.com/user-attachments/assets/89b682aa-b7c6-4151-adb3-0d000fe67cc7">
 <img width="300" height="250" alt="Screenshot 2024-07-12 at 10 14 09 AM" src="https://github.com/user-attachments/assets/1505da86-7218-48ae-868e-5da0fdf9316f">
 <img width="300" height="250" alt="Screenshot 2024-07-12 at 10 15 36 AM" src="https://github.com/user-attachments/assets/c49dfe83-60af-4e4d-82c6-49173c574d04">
-<img width="300" height="500" alt="Screenshot 2024-07-12 at 10 13 51 AM" src="https://github.com/user-attachments/assets/1cdece65-9f06-4b66-b017-ef3e0b6098a4">
-<img width="300" height="500" alt="Screenshot 2024-07-12 at 10 13 51 AM" src="https://github.com/user-attachments/assets/c44ee70c-a7eb-4bfa-84b4-464e959aeb29">
+<img width="300" height="250" alt="Screenshot 2024-07-12 at 10 13 51 AM" src="https://github.com/user-attachments/assets/1cdece65-9f06-4b66-b017-ef3e0b6098a4">
+<img width="300" height="250" alt="Screenshot 2024-07-12 at 10 13 51 AM" src="https://github.com/user-attachments/assets/c44ee70c-a7eb-4bfa-84b4-464e959aeb29">
 </p>
 
 ### 👨‍🏫 Admin Pages
