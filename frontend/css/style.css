@@ -636,7 +636,72 @@
     color:var(--light-color);
  }
 
+ .reviews .box-container{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
+    gap:1.5rem;
+    justify-content: center;
+    align-items: flex-start;
+ }
  
+ .reviews .box-container .box{
+    border-radius: .5rem;
+    background-color: var(--white);
+    padding: 2rem;
+ }
+ 
+ .reviews .box-container .box p{
+    line-height: 1.7;
+    font-size: 1.7rem;
+    color: var(--light-color);
+ }
+ 
+ .reviews .box-container .box .student{
+    margin-top: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+ }
+
+ #review {
+  
+    font-family: 'Nunito', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+    overflow: hidden; 
+    }
+     
+.reviews-container {
+    margin-left: 9rem;
+    overflow: hidden;
+    width: 80%;
+    max-width: 1000px;
+    perspective: 1000px;
+    }
+     
+.reviews-slider {
+    display: flex;
+    animation: scroll 30s linear infinite;
+    }
+     
+@keyframes scroll {
+    0% {
+        transform: translateX(0);
+    }
+    100%{
+        transform: translateX(calc(-250px * 3 * 2)); /* Adjust based on the number of reviews and their width */
+    }
+    }
+     
+.reviews-container:hover .reviews-slider,
+.reviews-container:active .reviews-slider {
+    animation-play-state: paused;
+    }
+
+
 .form-container{
     min-height: calc(100vh - 20rem);
     display: flex;
