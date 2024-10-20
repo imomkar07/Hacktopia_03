@@ -152,4 +152,112 @@
               formData.append("videoThumbnails", null);
             }
           }
-  
+          try {
+          const response = await fetch("http://localhost:3000/api/upload", {
+            method: "POST",
+            body: formData,
+          });
+
+          if (response.ok) {
+            alert("Playlist created successfully!");
+          } else {
+            alert("An error occurred. Please try again.");
+          }
+        } catch (error) {
+          console.error(error);
+          alert("An error occurred. Please try again.");
+        }
+      }
+
+      async function updatePlaylist() {
+        const playlistName = document.getElementById("playlistName").value;
+        const playlistImage = document.getElementById("playlistImage").files[0];
+        const playlistDescription = document.getElementById(
+          "playlistDescription"
+        ).value;
+        const videoFiles = document.getElementById("videoFiles").files;
+        const videoThumbnails = document.querySelectorAll(
+          ".video-thumbnail-input"
+        );
+        const videoHeadings = document.querySelectorAll(".videoHeadings");
+
+        const videoHeadingValues = [];
+        videoHeadings.forEach((heading) => {
+          videoHeadingValues.push(heading.value);
+        });
+
+        if (playlistName.trim() === "") {
+          alert("Please enter a playlist name.");
+          return;
+        }
+
+        if (!playlistImage) {
+          alert("Please select an image for the playlist.");
+          return;
+        }
+
+        if (videoFiles.length === 0) {
+          alert("Please select at least one video.");
+          return;
+        }
+
+        const formData = new FormData();
+        formData.append("playlistName", playlistName);
+        formData.append("playlistImage", playlistImage);
+        formData.append("playlistDescription", playlistDescription);
+
+        for (let i = 0; i < videoFiles.length; i++) {
+          formData.append("videos", videoFiles[i]);
+          formData.append("videoHeadings", videoHeadings[i].value);
+          const thumbnailFile = videoThumbnails[i].files[0];
+          if (thumbnailFile) {
+            formData.append("videoThumbnails", thumbnailFile);
+          } else {
+            formData.append("videoThumbnails", null);
+          }
+        }
+
+        try {
+          const response = await fetch("http://localhost:3000/api/update", {
+            method: "POST",
+            body: formData,
+          });
+
+          if (response.ok) {
+            alert("Playlist updated successfully!");
+          } else {
+            alert("An error occurred. Please try again.");
+          }
+        } catch (error) {
+          console.error(error);
+          alert("An error occurred. Please try again.");
+        }
+      }
+
+      function goToAdminPlaylists() {
+        window.location.href = "user.html";
+      }
+    </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        function updateProfileDisplay(profileData) {
+          document
+            .querySelectorAll(".profile .name")
+            .forEach((el) => (el.textContent = profileData.name));
+          document
+            .querySelectorAll(".profile .image")
+            .forEach((el) => (el.src = profileData.profilePic || ""));
+        }
+
+        function loadProfile() {
+          const profileData = JSON.parse(localStorage.getItem("profileData"));
+          if (profileData) {
+            updateProfileDisplay(profileData);
+          }
+        }
+
+        loadProfile();
+      });
+    </script>
+  </body>
+</html>
