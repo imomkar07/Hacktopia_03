@@ -1,3 +1,6 @@
+#3 Karma Coders
+#Educational Collaboration and Content Sharing Platform
+ 
  # 📚 Course Website Project
 
 Welcome to the Course Website Project! This platform allows users to access various online courses, interact with instructors, and utilize AI-assisted learning tools. Below is an overview of the features and functionalities available for both users and administrators.
