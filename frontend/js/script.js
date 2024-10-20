@@ -112,3 +112,76 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+document.addEventListener("DOMContentLoaded", () => {
+    const form = document.getElementById("profile-form");
+    form.addEventListener("submit", async (e) => {
+       e.preventDefault();
+ 
+       const name = document.getElementById("name").value;
+       const email = document.getElementById("email").value;
+       const profilePicInput = document.getElementById("profile-pic");
+       const profilePic = profilePicInput.files[0];
+ 
+       const formData = new FormData();
+       formData.append("name", name);
+       formData.append("email", email);
+       if (profilePic) {
+          formData.append("profilePic", profilePic);
+       }
+ 
+       try {
+          const response = await fetch("/api/update_profile", {
+             method: "POST",
+             body: formData,
+          });
+          const result = await response.json();
+ 
+          if (result.success) {
+             document
+                .querySelectorAll(".profile .name")
+                .forEach((el) => (el.textContent = result.profile.name));
+             if (profilePic) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                   document
+                      .querySelectorAll(".profile .image")
+                      .forEach((el) => (el.src = e.target.result));
+                };
+                reader.readAsDataURL(profilePic);
+             }
+             alert("Profile updated successfully");
+          } else {
+             alert("Error updating profile: " + result.error);
+          }
+       } catch (error) {
+          console.error("Error:", error);
+          alert("An error occurred while updating the profile.");
+       }
+    });
+
+    // Fetch and load existing profile data on page load
+   async function loadProfile() {
+    try {
+       const response = await fetch("/api/profile");
+       const profile = await response.json();
+       if (profile) {
+          document.getElementById("profile-section").innerHTML = await fetch('profile-section.html').then(response => response.text());
+          document
+             .querySelectorAll(".profile .name")
+             .forEach((el) => (el.textContent = profile.name));
+          document
+             .querySelectorAll(".profile .role")
+             .forEach((el) => (el.textContent = "student"));
+          if (profile.profilePic) {
+             document
+                .querySelectorAll(".profile .image")
+                .forEach((el) => (el.src = profile.profilePic));
+          }
+       }
+    } catch (error) {
+       console.error("Error fetching profile data:", error);
+    }
+ }
+
+ loadProfile();
+});
