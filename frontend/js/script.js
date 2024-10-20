@@ -53,3 +53,62 @@ document.querySelector('#close-btn').onclick = () => {
    body.classList.remove('active');
 }
 
+window.onscroll = () => {
+    profile.classList.remove('active');
+    search.classList.remove('active');
+ 
+    if (window.innerWidth < 1200) {
+       sideBar.classList.remove('active');
+       body.classList.remove('active');
+    }
+ }
+
+ // script.js
+
+document.addEventListener('DOMContentLoaded', () => {
+    const signupForm = document.getElementById('signupForm');
+ 
+    signupForm.addEventListener('submit', function (event) {
+       event.preventDefault();
+ 
+       const name = document.getElementById('name').value;
+ 
+       // Save the profile name in localStorage
+       localStorage.setItem('profileName', name);
+ 
+       // Redirect to home page after registration
+       window.location.href = 'home.html';
+    });
+ 
+    // Display the user's name on the home page
+    const profileName = localStorage.getItem('profileName');
+    if (profileName) {
+       document.getElementById('profile-name').textContent = profileName;
+       document.getElementById('sidebar-profile-name').textContent = profileName;
+    }
+ 
+    // Handle profile image upload
+    const photoUpload = document.getElementById('photo-upload');
+    photoUpload.addEventListener('change', function () {
+       const file = this.files[0];
+       if (file) {
+          const reader = new FileReader();
+          reader.onload = function (e) {
+             const imageUrl = e.target.result;
+             document.getElementById('profile-img').src = imageUrl;
+             document.getElementById('sidebar-profile-img').src = imageUrl;
+             // Save the image in localStorage
+             localStorage.setItem('profileImage', imageUrl);
+          };
+          reader.readAsDataURL(file);
+       }
+    });
+ 
+    // Check if there's a saved profile image in localStorage
+    const savedImage = localStorage.getItem('profileImage');
+    if (savedImage) {
+       document.getElementById('profile-img').src = savedImage;
+       document.getElementById('sidebar-profile-img').src = savedImage;
+    }
+});
+
