@@ -1,5 +1,5 @@
-#3 Karma Coders
-#Educational Collaboration and Content Sharing Platform
+##3 Karma Coders
+##Educational Collaboration and Content Sharing Platform
  
  # 📚 Course Website Project
 
