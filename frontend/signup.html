@@ -68,6 +68,68 @@
         </nav>
       </div>
 
+      <div
+      id="message"
+      style="
+        display: none;
+        background-color: #f8d7da;
+        color: #721c24;
+        padding: 10px;
+        margin-top: 10px;
+        text-align: center;
+      "
+    >
+      <h2>Please signup first.</h2>
+    </div>
+
+    <section class="form-container">
+        <form action="/signup" method="post">
+          <h3>Register Now</h3>
+          <p>Your Name <span>*</span></p>
+          <input
+            type="text"
+            name="name"
+            id="name"
+            placeholder="Enter your name"
+            required
+            maxlength="50"
+            class="box"
+          />
+          <p>Your Email <span>*</span></p>
+          <input
+            type="email"
+            name="email"
+            id="signupEmail"
+            placeholder="Enter your email"
+            required
+            maxlength="50"
+            class="box"
+          />
+          <p>Your Password <span>*</span></p>
+          <input
+            type="password"
+            name="password"
+            id="signupPassword"
+            placeholder="Enter your password"
+            required
+            maxlength="20"
+            class="box"
+          />
+          <p>Confirm Password <span>*</span></p>
+          <input
+            type="password"
+            name="confirmPassword"
+            id="confirmPassword"
+            placeholder="Confirm your password"
+            required
+            maxlength="20"
+            class="box"
+          />
+          <p>Already have an account? <a href="login.html">Login</a></p>
+          <button type="submit" class="signupbtn">Sign Up</button>
+        </form>
+    </section>
+
     
   </body>
 </html>
