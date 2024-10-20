@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      #root {
+        width: 100vw;
+        height: 100vh;
+      }
+      .buttons {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 20px;
+      }
+      .buttons button {
+        margin: 10px;
+        padding: 10px 20px;
+        font-size: 16px;
+      }
+    </style>
+    <title>Video Call App</title>
+  </head>
+  <body>
+    <div class="buttons" style="display: none">
+      <!-- Buttons will be inserted here by JavaScript -->
+    </div>
+    <div id="root" style="display: block"></div>
+
+    <script src="https://unpkg.com/@zegocloud/zego-uikit-prebuilt/zego-uikit-prebuilt.js"></script>
+
+  </body>
+</html>
