@@ -83,5 +83,124 @@
     <footer class="footer">
       &copy; Copyright by <span>Lalit Deore</span> | All rights reserved!
     </footer>
+    <script>
+      async function filterPlaylists(searchTerm) {
+        const playlistsContainer = document.getElementById("playlists");
+        const playlists = playlistsContainer.getElementsByClassName("playlist");
+
+        Array.from(playlists).forEach((playlist) => {
+          const playlistName = playlist
+            .querySelector(".playlist-details h3")
+            .textContent.toLowerCase();
+          if (playlistName.includes(searchTerm.toLowerCase())) {
+            playlist.style.display = "block";
+          } else {
+            playlist.style.display = "none";
+          }
+        });
+      }
+
+      async function fetchPlaylists() {
+        try {
+          const response = await fetch("http://localhost:3000/api/playlists");
+          const playlists = await response.json();
+          const playlistsContainer = document.getElementById("playlists");
+
+          playlists.forEach((playlist) => {
+            const playlistDiv = document.createElement("div");
+            playlistDiv.classList.add("playlist");
+            playlistDiv.id = playlist._id;
+
+            const imageUrl = `http://localhost:3000/uploads/${playlist.image.filename}`;
+
+            playlistDiv.innerHTML = `
+              <div class="playlist-info">
+                <img src="${imageUrl}" alt="${playlist.name}" class="playlist-image" onclick="openPlaylist('${playlist._id}')">
+                <div class="playlist-details">
+                  <h3>${playlist.name}</h3>
+                  <p>${playlist.description}</p>
+                </div>
+                <div class="delete-btn-container">
+                  <button class="delete-btn" onclick="deletePlaylist('${playlist._id}')">Delete</button>
+                </div>
+              </div>
+              <div class="playlist-videos hidden"></div>
+            `;
+
+            playlistsContainer.appendChild(playlistDiv);
+          });
+        } catch (error) {
+          console.error(error);
+          alert("An error occurred while fetching playlists.");
+        }
+      }
+
+      const searchBox = document.getElementById("search_box");
+      searchBox.addEventListener("input", function () {
+        const searchTerm = this.value.trim();
+        filterPlaylists(searchTerm);
+      });
+
+      async function deletePlaylist(playlistId) {
+        try {
+          const response = await fetch(
+            `http://localhost:3000/api/playlists/${playlistId}`,
+            {
+              method: "DELETE",
+            }
+          );
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          // Remove the playlist element from the DOM
+          const playlistElement = document.getElementById(playlistId);
+          playlistElement.parentNode.removeChild(playlistElement);
+          alert("Playlist deleted successfully!");
+        } catch (error) {
+          console.error("Error deleting playlist:", error);
+          alert("An error occurred while deleting the playlist.");
+        }
+      }
+
+      async function openPlaylist(playlistId) {
+        try {
+          const response = await fetch(
+            `http://localhost:3000/api/playlists/${playlistId}`
+          );
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          const playlist = await response.json();
+
+          // Redirect to watch_video.html with playlist ID as query parameter
+          window.location.href = `Admin_watch_video.html?playlistId=${playlistId}`;
+        } catch (error) {
+          console.error("Error fetching playlist details:", error);
+          alert(
+            "An error occurred while fetching playlist details. Please try again later."
+          );
+        }
+      }
+
+      async function openVideoModal(videoUrl, thumbnailUrl) {
+        const modal = document.getElementById("videoModal");
+        const modalVideo = document.getElementById("modalVideo");
+        const videoThumbnail = document.getElementById("videoThumbnail");
+
+        modalVideo.src = `http://localhost:3000/uploads/${videoUrl}`;
+        videoThumbnail.src = thumbnailUrl
+          ? `http://localhost:3000/uploads/${thumbnailUrl}`
+          : "";
+        modal.style.display = "block";
+      }
+
+      document.querySelector(".close").addEventListener("click", function () {
+        document.getElementById("videoModal").style.display = "none";
+        document.getElementById("modalVideo").pause();
+      });
+
+      fetchPlaylists();
+    </script>
+    <script src="js/script.js"></script>
   </body>
 </html>
