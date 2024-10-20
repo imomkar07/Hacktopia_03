@@ -81,8 +81,75 @@
         </div>
       </section>
       <footer class="footer">
-        &copy; Copyright by <span>Lalit Deore</span> | All rights reserved!
+        &copy; Copyright by <span>Edunet</span> | All rights reserved!
       </footer>
       <!-- Custom JS file link -->
       <script src="js/script.js"></script>
-      
+      <script>
+        document
+          .getElementById("videoFiles")
+          .addEventListener("change", function () {
+            const videoFiles = this.files;
+            const videoThumbnailsContainer =
+              document.getElementById("videoThumbnails");
+            videoThumbnailsContainer.innerHTML = "";
+            for (let i = 0; i < videoFiles.length; i++) {
+              const div = document.createElement("div");
+              div.classList.add("video-thumbnail");
+              div.innerHTML = `
+                  <p>${videoFiles[i].name}</p>
+                  <input type="file" accept="image/*" class="video-thumbnail-input" data-video-index="${i}" />
+                  <input type="text" placeholder="Enter Video Heading" class="videoHeadings" data-video-index="${i}" />
+              `;
+              videoThumbnailsContainer.appendChild(div);
+            }
+          });
+  
+        async function submitPlaylist() {
+          const playlistName = document.getElementById("playlistName").value;
+          const playlistImage = document.getElementById("playlistImage").files[0];
+          const playlistDescription = document.getElementById(
+            "playlistDescription"
+          ).value;
+          const videoFiles = document.getElementById("videoFiles").files;
+          const videoThumbnails = document.querySelectorAll(
+            ".video-thumbnail-input"
+          );
+          const videoHeadings = document.querySelectorAll(".videoHeadings");
+          const videoHeadingValues = [];
+          videoHeadings.forEach((heading) => {
+            videoHeadingValues.push(heading.value);
+          });
+  
+          if (playlistName.trim() === "") {
+            alert("Please enter a playlist name.");
+            return;
+          }
+  
+          if (!playlistImage) {
+            alert("Please select an image for the playlist.");
+            return;
+          }
+  
+          if (videoFiles.length === 0) {
+            alert("Please select at least one video.");
+            return;
+          }
+  
+          const formData = new FormData();
+          formData.append("playlistName", playlistName);
+          formData.append("playlistImage", playlistImage);
+          formData.append("playlistDescription", playlistDescription);
+  
+          for (let i = 0; i < videoFiles.length; i++) {
+            console.log(`Video Heading ${i}:`, videoHeadings[i].value);
+            formData.append("videos", videoFiles[i]);
+            formData.append("videoHeadings", videoHeadings[i].value);
+            const thumbnailFile = videoThumbnails[i].files[0];
+            if (thumbnailFile) {
+              formData.append("videoThumbnails", thumbnailFile);
+            } else {
+              formData.append("videoThumbnails", null);
+            }
+          }
+  
