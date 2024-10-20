@@ -1,0 +1,22 @@
+/* CSS for Delete Button */
+.delete-btn {
+    background-color: #e74c3c;
+    color: white;
+    height: 60px;
+    width: 150px;
+    margin: 2rem auto 20px; /* Adjusted margin top and added margin from bottom */
+    display: block; /* Ensures button is displayed as a block element */
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+  }
+  
+  .delete-btn:hover,
+  .inline-delete-btn:hover {
+    background-color: #c0392b;
+    transform: translateY(-2px);
+  }
+  
