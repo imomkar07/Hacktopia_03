@@ -112,6 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+
 document.addEventListener("DOMContentLoaded", () => {
     const form = document.getElementById("profile-form");
     form.addEventListener("submit", async (e) => {
