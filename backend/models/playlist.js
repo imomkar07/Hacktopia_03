@@ -16,4 +16,6 @@ const playlistSchema = new mongoose.Schema({
     image: fileSchema,
     videos: [videoSchema],
 });
+const Playlist = mongoose.model('Playlist', playlistSchema);
 
+module.exports = Playlist;
