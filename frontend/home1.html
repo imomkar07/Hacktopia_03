@@ -144,6 +144,177 @@
               >
             </div>
           </section>
-          
+        
+          <footer class="footer">
+            &copy; Copyright by <span>Edunet </span> | All rights reserved!
+          </footer>
+
+
+          <script>
+            function showMessage() {
+              document.getElementById("message").style.display = "block";
+              setTimeout(function () {
+                document.getElementById("message").style.display = "none";
+              }, 3000);
+              return false;
+            }
+          </script>
+          <script>
+            async function fetchPlaylists() {
+              try {
+                const response = await fetch("http://localhost:3000/api/playlists");
+                const playlists = await response.json();
+                const playlistsContainer = document.getElementById("playlists");
+                const maxVideosToShow = 3;
+                playlists.slice(0, maxVideosToShow).forEach((playlist) => {
+                  const playlistDiv = document.createElement("div");
+                  playlistDiv.classList.add("playlist");
+      
+                  const imageUrl = `http://localhost:3000/uploads/${playlist.image.filename}`;
+      
+                  playlistDiv.innerHTML = `
+                  <div class="playlist-info">
+                    <img src="${imageUrl}" alt="${playlist.name}" class="playlist-image" onclick="openPlaylist('${playlist._id}')">
+                    <div class="playlist-details">
+                      <h3>${playlist.name}</h3>
+                      <p>${playlist.description}</p>
+                    </div>
+                  </div>
+                  <div class="playlist-videos hidden"></div>
+                `;
+      
+                  playlistsContainer.appendChild(playlistDiv);
+                });
+              } catch (error) {
+                console.error(error);
+                alert("An error occurred while fetching playlists.");
+              }
+            }
+      
+            async function openPlaylist(playlistId) {
+              try {
+                const response = await fetch(
+                  `http://localhost:3000/api/playlists/${playlistId}`
+                );
+                if (!response.ok) {
+                  throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                const playlist = await response.json();
+      
+                window.location.href = `watch_video.html?playlistId=${playlistId}`;
+              } catch (error) {
+                console.error("Error fetching playlist details:", error);
+                alert(
+                  "An error occurred while fetching playlist details. Please try again later."
+                );
+              }
+            }
+      
+            async function openVideoModal(videoUrl, thumbnailUrl) {
+              const modal = document.getElementById("videoModal");
+              const modalVideo = document.getElementById("modalVideo");
+              const videoThumbnail = document.getElementById("videoThumbnail");
+      
+              modalVideo.src = `http://localhost:3000/uploads/${videoUrl}`;
+              videoThumbnail.src = thumbnailUrl
+                ? `http://localhost:3000/uploads/${thumbnailUrl}`
+                : "";
+              modal.style.display = "block";
+            }
+      
+            document.querySelector(".close").addEventListener("click", function () {
+              document.getElementById("videoModal").style.display = "none";
+              document.getElementById("modalVideo").pause();
+            });
+      
+            fetchPlaylists();
+            function filterPlaylists(query) {
+              const playlists = document.querySelectorAll(".playlist");
+              let visibleCount = 0;
+      
+              playlists.forEach((playlist) => {
+                const title = playlist.querySelector(
+                  ".playlist-details h3"
+                ).textContent;
+                const description = playlist.querySelector(
+                  ".playlist-details p"
+                ).textContent;
+      
+                if (
+                  title.toLowerCase().includes(query.toLowerCase()) ||
+                  description.toLowerCase().includes(query.toLowerCase())
+                ) {
+                  playlist.style.display = "block";
+                  visibleCount++;
+                } else {
+                  playlist.style.display = "none";
+                }
+              });
+
+              // Adjust visibility to show only the top 4 matching results
+        playlists.forEach((playlist, index) => {
+          if (playlist.style.display === "block" && visibleCount > 4) {
+            if (index >= 4) {
+              playlist.style.display = "none";
+            }
+          }
+        });
+      }
+    </script>
+
+<script>
+    // JavaScript to fetch and display profiles
+
+    document.addEventListener("DOMContentLoaded", () => {
+      loadProfiles();
+    });
+
+    async function loadProfiles() {
+      try {
+        const response = await fetch("http://localhost:3000/api2/profiling");
+        if (!response.ok) {
+          throw new Error("Failed to fetch profiles");
+        }
+        const profiles = await response.json();
+        displayProfiles(profiles.slice(0, 3));
+      } catch (error) {
+        console.error("Error fetching profiles:", error);
+      }
+    }
+
+    function displayProfiles(profiles) {
+      const profilesContainer = document.getElementById("profilesContainer");
+      profilesContainer.innerHTML = "";
+      profiles.forEach((profile) => {
+        const profileElement = document.createElement("div");
+        profileElement.className = "tutor";
+        profileElement.innerHTML = `
+        <img src="/uploads/${profile.profileImage}" alt="Profile Image">
+        <div>
+          <h3>Name: ${profile.name}</h3>
+          <p>Experience: ${profile.experience}</p>
+          <h4>Profession: ${profile.profession}</h4>
+         
+        </div>
+      `;
+        profilesContainer.appendChild(profileElement);
+      });
+    }
+  </script>
+  <script>
+    // Function to initialize Typed.js with dynamic profile name and roles
+
+    var type = new Typed(".multiple-text", {
+      strings: ["Professional"],
+      typeSpeed: 100,
+      backSpeed: 100,
+      backDelay: 1000,
+      loop: true,
+    });
+
+    loadProfile();
+  </script>
+
+  <script src="js/script.js"></script>
     </body>
 </html> 
