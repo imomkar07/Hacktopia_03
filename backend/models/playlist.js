@@ -10,4 +10,10 @@ const videoSchema = new mongoose.Schema({
     heading: String, // Add a new field for video heading
     thumbnail: fileSchema,
 });
+const playlistSchema = new mongoose.Schema({
+    name: String,
+    description: String,
+    image: fileSchema,
+    videos: [videoSchema],
+});
 
