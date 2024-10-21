@@ -1,0 +1,200 @@
+<!-- this is the copy of Admin to create playlist-->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <!-- Font Awesome CDN link -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css"
+    />
+    <!-- Custom CSS file link -->
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/main.css" />
+  </head>
+  <body>
+    <header class="header">
+      <section class="flex">
+        <a href="home.html" class="logo">Admin.</a>
+        <form action="/login" method="post" class="search-form">
+          <input
+            type="text"
+            name="search_box"
+            required
+            placeholder="search courses..."
+            maxlength="100"
+          />
+          <button type="submit" class="fas fa-search"></button>
+        </form>
+
+        <div class="icons">
+          <div id="menu-btn" class="fas fa-bars"></div>
+          <div id="search-btn" class="fas fa-search"></div>
+          <div id="user-btn" class="fas fa-user"></div>
+          <div id="toggle-btn" class="fas fa-sun"></div>
+        </div>
+      </section>
+    </header>
+
+    <div class="side-bar">
+      <div id="close-btn">
+        <i class="fas fa-times"></i>
+      </div>
+
+      <nav class="navbar">
+        <a href="home.html"><i class="fas fa-home"></i><span>home</span></a>
+        <a href="about.html"
+          ><i class="fas fa-question"></i><span>about</span></a
+        >
+        <a href="Admin_playlist_delete.html"
+          ><i class="fas fa-graduation-cap"></i><span>Delete Playlist</span></a
+        >
+        <a href="teachers.html"
+          ><i class="fas fa-chalkboard-user"></i><span>teachers</span></a
+        >
+        <a href="Admin_update_video.html"
+          ><i class="fas fa-headset"></i><span>Update Playlist</span></a
+        >
+      </nav>
+    </div>
+
+    <section class="create_playlist">
+      <div class="container">
+        <h2>Create Video Playlist</h2>
+        <input
+          type="text"
+          id="playlistName"
+          placeholder="Enter Playlist Name"
+        />
+        <input type="file" id="playlistImage" accept="image/*" />
+        <textarea
+          id="playlistDescription"
+          placeholder="Enter Playlist Description"
+        ></textarea>
+        <input type="file" id="videoFiles" multiple accept="video/*" />
+        <div id="videoThumbnails"></div>
+        <button onclick="submitPlaylist()">Submit Playlist</button>
+      </div>
+    </section>
+
+    <footer class="footer">
+      &copy; Copyright @ 2022 by <span>Mr. Web Designer</span> | All rights
+      reserved!
+    </footer>
+
+    <!-- Custom JS file link -->
+    <script src="js/script.js"></script>
+    <script>
+      document
+        .getElementById("videoFiles")
+        .addEventListener("change", function () {
+          const videoFiles = this.files;
+          const videoThumbnailsContainer =
+            document.getElementById("videoThumbnails");
+          videoThumbnailsContainer.innerHTML = "";
+
+          for (let i = 0; i < videoFiles.length; i++) {
+            const div = document.createElement("div");
+            div.classList.add("video-thumbnail");
+            div.innerHTML = `
+              <p>${videoFiles[i].name}</p>
+              <input type="file" accept="image/*" class="video-thumbnail-input" data-video-index="${i}" />
+              <input type="text" placeholder="Enter Video Heading" class="videoHeadings" data-video-index="${i}" />
+            `;
+            videoThumbnailsContainer.appendChild(div);
+          }
+        });
+
+      async function submitPlaylist() {
+        const playlistName = document.getElementById("playlistName").value;
+        const playlistImage = document.getElementById("playlistImage").files[0];
+        const playlistDescription = document.getElementById(
+          "playlistDescription"
+        ).value;
+        const videoFiles = document.getElementById("videoFiles").files;
+        const videoThumbnails = document.querySelectorAll(
+          ".video-thumbnail-input"
+        );
+        const videoHeadings = document.querySelectorAll(".videoHeadings");
+        console.log(videoHeadings);
+
+        if (playlistName.trim() === "") {
+          alert("Please enter a playlist name.");
+          return;
+        }
+
+        if (!playlistImage) {
+          alert("Please select an image for the playlist.");
+          return;
+        }
+
+        if (videoFiles.length === 0) {
+          alert("Please select at least one video.");
+          return;
+        }
+
+        const formData = new FormData();
+        formData.append("playlistName", playlistName);
+        formData.append("playlistImage", playlistImage);
+        formData.append("playlistDescription", playlistDescription);
+
+        for (let i = 0; i < videoFiles.length; i++) {
+          console.log(`Video Heading ${i}:`, videoHeadings[i].value);
+          formData.append("videos", videoFiles[i]);
+          formData.append("videoHeadings", videoHeadings[i].value);
+          const thumbnailFile = videoThumbnails[i].files[0];
+          if (thumbnailFile) {
+            formData.append("videoThumbnails", thumbnailFile);
+          } else {
+            formData.append("videoThumbnails", null);
+          }
+        }
+
+        try {
+          const response = await fetch("http://localhost:3000/api/upload", {
+            method: "POST",
+            body: formData,
+          });
+
+          if (response.ok) {
+            alert("Playlist created successfully!");
+          } else {
+            alert("An error occurred. Please try again.");
+          }
+        } catch (error) {
+          console.error(error);
+          alert("An error occurred. Please try again.");
+        }
+      }
+
+      function goToAdminPlaylists() {
+        window.location.href = "admin_playlist.html";
+      }
+    </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        function updateProfileDisplay(profileData) {
+          document
+            .querySelectorAll(".profile .name")
+            .forEach((el) => (el.textContent = profileData.name));
+          document
+            .querySelectorAll(".profile .image")
+            .forEach((el) => (el.src = profileData.profilePic || ""));
+        }
+
+        function loadProfile() {
+          const profileData = JSON.parse(localStorage.getItem("profileData"));
+          if (profileData) {
+            updateProfileDisplay(profileData);
+          }
+        }
+
+        loadProfile();
+      });
+    </script>
+  </body>
+</html>

@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Delete Playlist</title>
+    <title>Login</title>
     <!-- Font Awesome CDN link -->
     <link
       rel="stylesheet"
@@ -16,52 +16,53 @@
   </head>
   <body>
     <header class="header">
-        <section class="flex">
-          <a href="home.html" class="logo">Admin.</a>
-          <form action="/login" method="post" class="search-form">
-            <input
-              type="text"
-              name="search_box"
-              id="search_box"
-              required
-              placeholder="Search courses..."
-              maxlength="100"
-            />
-            <button type="submit" class="fas fa-search"></button>
-          </form>
-  
-          <div class="icons">
-            <div id="menu-btn" class="fas fa-bars"></div>
-            <div id="search-btn" class="fas fa-search"></div>
-            <div id="user-btn" class="fas fa-user"></div>
-            <div id="toggle-btn" class="fas fa-sun"></div>
-          </div>
-        </section>
-    </header>
-    <div class="side-bar">
-        <div id="close-btn">
-          <i class="fas fa-times"></i>
+      <section class="flex">
+        <a href="home.html" class="logo">Admin.</a>
+        <form action="/login" method="post" class="search-form">
+          <input
+            type="text"
+            name="search_box"
+            id="search_box"
+            required
+            placeholder="Search courses..."
+            maxlength="100"
+          />
+          <button type="submit" class="fas fa-search"></button>
+        </form>
+
+        <div class="icons">
+          <div id="menu-btn" class="fas fa-bars"></div>
+          <div id="search-btn" class="fas fa-search"></div>
+          <div id="user-btn" class="fas fa-user"></div>
+          <div id="toggle-btn" class="fas fa-sun"></div>
         </div>
-  
-        <nav class="navbar">
-          <a href="Admin_page.html"><i class="fas fa-home"></i><span>Home</span></a>
-          <a href="Admin.html"
-            ><i class="fas fa-headset"></i><span>Create & Update</span></a
-          >
-          <a href="Admin_playlist_delete.html"
-            ><i class="fas fa-graduation-cap"></i><span>View & Delete Courses</span></a
-          >
-          <a href="Admin_teacher_create_recive1.html"
-            ><i class="fas fa-chalkboard-user"></i><span>Teachers</span></a
-          >
-          <a href="Admin_teacher_delete.html"
-            ><img src="images/recycle.png" /><span>Delete Teachers</span></a
-          >
-          <a href="Admin_recive_contact.html"
-            ><i class="fa-regular fa-address-book"></i></i
-            ><span>Recived Contacts</span></a
-          >
-        </nav>
+      </section>
+    </header>
+
+    <div class="side-bar">
+      <div id="close-btn">
+        <i class="fas fa-times"></i>
+      </div>
+
+      <nav class="navbar">
+        <a href="Admin_page.html"><i class="fas fa-home"></i><span>Home</span></a>
+        <a href="Admin.html"
+          ><i class="fas fa-headset"></i><span>Create & Update</span></a
+        >
+        <a href="Admin_playlist_delete.html"
+          ><i class="fas fa-graduation-cap"></i><span>View & Delete Courses</span></a
+        >
+        <a href="Admin_teacher_create_recive1.html"
+          ><i class="fas fa-chalkboard-user"></i><span>Teachers</span></a
+        >
+        <a href="Admin_teacher_delete.html"
+          ><img src="images/recycle.png" /><span>Delete Teachers</span></a
+        >
+        <a href="Admin_recive_contact.html"
+          ><i class="fa-regular fa-address-book"></i></i
+          ><span>Recived Contacts</span></a
+        >
+      </nav>
     </div>
     <section >
       <h1 class="heading">Admin Courses </h1>
@@ -80,9 +81,12 @@
         </div>
       </div>
     </section>
+
     <footer class="footer">
-      &copy; Copyright by <span>Pathshala</span> | All rights reserved!
+      &copy; Copyright by <span>Lalit Deore</span> | All rights reserved!
     </footer>
+
+    <!-- Custom JS file link -->
     <script>
       async function filterPlaylists(searchTerm) {
         const playlistsContainer = document.getElementById("playlists");

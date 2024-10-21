@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/Admin_teacher.css" />
+    <link rel="stylesheet" href="css/chatform2.css" />
+    <title>Profile Creation</title>
+  </head>
+  <body>
+    <header class="header">
+      <section class="flex">
+        <a href="home.html" class="logo">Admin.</a>
+
+        <form action="search.html" method="post" class="search-form">
+          <input
+            type="text"
+            name="search_box"
+            required
+            placeholder="search courses..."
+            maxlength="100"
+          />
+          <button type="submit" class="fas fa-search"></button>
+        </form>
+
+        <div class="icons">
+          <div id="menu-btn" class="fas fa-bars"></div>
+          <div id="search-btn" class="fas fa-search"></div>
+          <div id="user-btn" class="fas fa-user"></div>
+          <div id="toggle-btn" class="fas fa-sun"></div>
+        </div>
+
+        <div class="profile">
+          <img src="" class="image" alt="user image" />
+          <h3 class="name">Default Name</h3>
+          <p class="role">student</p>
+        </div>
+      </section>
+    </header>
+
+    <div class="side-bar">
+      <div id="close-btn">
+        <i class="fas fa-times"></i>
+      </div>
+
+      <div class="profile">
+        <img src="" class="image" alt="user image" />
+        <h3 class="name">Default Name</h3>
+        <p class="role">student</p>
+      </div>
+
+      <nav class="navbar">
+        <a href="home.html"><i class="fas fa-home"></i><span>home</span></a>
+        <a href="about.html"
+          ><i class="fas fa-question"></i><span>about</span></a
+        >
+        <a href="user.html"
+          ><i class="fas fa-graduation-cap"></i><span>courses</span></a
+        >
+        <a href="teachers.html"
+          ><i class="fas fa-chalkboard-user"></i><span>teachers</span></a
+        >
+        <a href="contact.html"
+          ><i class="fas fa-headset"></i><span>contact us</span></a
+        >
+      </nav>
+    </div>
+
+    <section class="teachers">
+      <h1 class="heading">Expert Teachers</h1>
+      <form action="" method="post" class="search-tutor">
+        <input
+          type="text"
+          id="tutorSearchBox"
+          name="search_box"
+          placeholder="Search tutors..."
+          required
+          maxlength="100"
+        />
+        <button
+          type="submit"
+          class="fas fa-search"
+          name="search_tutor"
+        ></button>
+      </form>
+      <div class="box-container" id="tutorProfileContainer">
+        <!-- Existing tutor profiles will be dynamically added here -->
+      </div>
+    </section>
+
+    <div id="profilesContainer">
+      <!-- Profiles will be dynamically added here -->
+    </div>
+
+    <div class="chat-form" id="chatForm">
+      <div class="chat-header">
+        <span id="chatProfileName"></span>
+        <button id="closeChatForm">&times;</button>
+      </div>
+      <div class="chat-messages" id="chatMessages"></div>
+      <form id="messageForm">
+        <input
+          type="text"
+          id="messageInput"
+          name="message"
+          placeholder="Type a message..."
+          required
+        />
+        <button type="submit">Send</button>
+      </form>
+    </div>
+    <footer class="footer">
+      &copy; Copyright @ 2022 by <span>Mr. Web Designer</span> | All rights
+      reserved!
+    </footer>
+    <script>
+      document
+        .getElementById("closeChatForm")
+        .addEventListener("click", function () {
+          document.getElementById("chatForm").style.display = "none";
+        });
+
+      document.addEventListener("DOMContentLoaded", () => {
+        loadProfiles();
+      });
+
+      async function loadProfiles() {
+        try {
+          const response = await fetch("http://localhost:3000/api2/profiling");
+          if (!response.ok) {
+            throw new Error("Failed to fetch profiles");
+          }
+          const profiles = await response.json();
+          displayProfiles(profiles);
+        } catch (error) {
+          console.error("Error fetching profiles:", error);
+        }
+      }
+
+      function displayProfiles(profiles) {
+        const profilesContainer = document.getElementById("profilesContainer");
+        profilesContainer.innerHTML = "";
+        profiles.forEach((profile) => {
+          const profileElement = document.createElement("div");
+          profileElement.className = "tutor";
+          profileElement.innerHTML = `
+            <img src="/uploads/${profile.profileImage}" alt="Profile Image">
+            <div>
+              <h3>Name: ${profile.name}</h3>
+              <p>Experience: ${profile.experience}</p>
+              <h4>Profession: ${profile.profession}</h4>
+            </div>
+            <div class="icons">
+              <a class="inline-btn chat-btn" data-id="${profile._id}" data-name="${profile.name}"><i class="fa-brands fa-rocketchat"></i></a>
+              <a class="inline-btn" href="WEB_UIKITS.html"><i class="fa-solid fa-video"></i></a>
+            </div>
+          `;
+          profilesContainer.appendChild(profileElement);
+        });
+
+        // Add click event listener to chat icons
+        document.querySelectorAll(".chat-btn").forEach((btn) => {
+          btn.addEventListener("click", function () {
+            const profileId = this.getAttribute("data-id");
+            const profileName = this.getAttribute("data-name");
+            openChatForm(profileId, profileName);
+          });
+        });
+      }
+
+      function openChatForm(profileId, profileName) {
+        document.getElementById("chatProfileName").textContent = profileName;
+        document.getElementById("chatForm").style.display = "block";
+        loadChatMessages(profileId);
+
+        document.getElementById("messageForm").onsubmit = function (event) {
+          event.preventDefault();
+          const message = document.getElementById("messageInput").value;
+          sendMessage(profileId, message);
+          document.getElementById("messageInput").value = "";
+        };
+      }
+
+      async function loadChatMessages(profileId) {
+        try {
+          const response = await fetch(
+            `http://localhost:3000/api2/messages/${profileId}`
+          );
+          if (!response.ok) {
+            throw new Error("Failed to fetch messages");
+          }
+          const messages = await response.json();
+          displayMessages(messages);
+        } catch (error) {
+          console.error("Error fetching messages:", error);
+        }
+      }
+
+      function displayMessages(messages) {
+        const chatMessages = document.getElementById("chatMessages");
+        chatMessages.innerHTML = "";
+        messages.forEach((msg) => {
+          const messageElement = document.createElement("div");
+          // Assuming msg.isSent is a boolean that is true for sent messages
+          messageElement.className = `message ${
+            msg.isSent ? "message-right" : "message-left"
+          }`;
+          messageElement.innerHTML = `
+            <div class="message-content">${msg.content}</div>
+          `;
+          chatMessages.appendChild(messageElement);
+        });
+      }
+
+      async function sendMessage(profileId, content) {
+        try {
+          const response = await fetch(
+            "http://localhost:3000/api2/messages/send",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                profileId,
+                content,
+              }),
+            }
+          );
+          if (!response.ok) {
+            throw new Error("Failed to send message");
+          }
+
+          // Add the sent message to the chat immediately
+          const messageElement = document.createElement("div");
+          messageElement.className = "message message-right";
+          messageElement.innerHTML = `
+            <div class="message-content">${content}</div>
+          `;
+          const chatMessages = document.getElementById("chatMessages");
+          chatMessages.appendChild(messageElement);
+          chatMessages.scrollTop = chatMessages.scrollHeight; // Scroll to the bottom
+        } catch (error) {
+          console.error("Error sending message:", error);
+        }
+      }
+
+      document
+        .getElementById("tutorSearchBox")
+        .addEventListener("input", function () {
+          const searchText = this.value.toLowerCase();
+          const profileElements = document.querySelectorAll(
+            "#profilesContainer .tutor"
+          );
+
+          profileElements.forEach((profileElement) => {
+            const name = profileElement
+              .querySelector("h3")
+              .textContent.toLowerCase();
+            const experience = profileElement
+              .querySelector("p")
+              .textContent.toLowerCase();
+            const profession = profileElement
+              .querySelector("h4")
+              .textContent.toLowerCase();
+
+            if (
+              name.includes(searchText) ||
+              experience.includes(searchText) ||
+              profession.includes(searchText)
+            ) {
+              profileElement.style.display = "block";
+            } else {
+              profileElement.style.display = "none";
+            }
+          });
+        });
+    </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        function updateProfileDisplay(profileData) {
+          document
+            .querySelectorAll(".profile .name")
+            .forEach((el) => (el.textContent = profileData.name));
+          document
+            .querySelectorAll(".profile .image")
+            .forEach((el) => (el.src = profileData.profilePic || ""));
+        }
+
+        function loadProfile() {
+          const profileData = JSON.parse(localStorage.getItem("profileData"));
+          if (profileData) {
+            updateProfileDisplay(profileData);
+          }
+        }
+
+        loadProfile();
+      });
+    </script>
+
+    <script src="js/script.js"></script>
+  </body>
+</html>

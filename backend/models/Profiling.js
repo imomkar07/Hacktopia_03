@@ -8,3 +8,4 @@ const profilingSchema = new mongoose.Schema({
 const Profiling = mongoose.model('Profiling', profilingSchema);
 
 module.exports = Profiling;
+

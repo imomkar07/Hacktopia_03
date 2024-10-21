@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Watch Videos</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/user.css" />
+    <!-- font awesome cdn link  -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css"
+    />
+  </head>
+  <body>
+    <header class="header">
+      <section class="flex">
+        <a href="home.html" class="logo">Pathshala.</a>
+
+        <form action="search.html" method="post" class="search-form">
+          <input
+            type="text"
+            name="search_box"
+            required
+            placeholder="search courses..."
+            maxlength="100"
+          />
+          <button type="submit" class="fas fa-search"></button>
+        </form>
+
+        <div class="icons">
+          <div id="menu-btn" class="fas fa-bars"></div>
+          <div id="search-btn" class="fas fa-search"></div>
+          <div id="user-btn" class="fas fa-user"></div>
+          <div id="toggle-btn" class="fas fa-sun"></div>
+        </div>
+
+        <div class="profile">
+          <img src="" class="image" alt="user image" />
+          <h3 class="name">Default Name</h3>
+          <p class="role">student</p>
+        </div>
+      </section>
+    </header>
+
+    <div class="side-bar">
+      <div id="close-btn">
+        <i class="fas fa-times"></i>
+      </div>
+
+      <div class="profile">
+        <img src="" class="image" alt="user image" />
+        <h3 class="name">Default Name</h3>
+        <p class="role">student</p>
+      </div>
+
+      <nav class="navbar">
+        <a href="home.html"><i class="fas fa-home"></i><span>Home</span></a>
+        <a href="about.html"
+          ><i class="fas fa-question"></i><span>About</span></a
+        >
+        <a href="user.html"
+          ><i class="fas fa-graduation-cap"></i><span>Courses</span></a
+        >
+        <a href="teacher_profile1.html"
+          ><i class="fas fa-chalkboard-user"></i><span>Teachers</span></a
+        >
+        <a href="AI_helper.html"
+          ><img src="images/robotic.png" /><span>AI Helper</span></a
+        >
+        <a href="contact.html"
+          ><i class="fa-regular fa-message"></i><span>Contact Us</span></a
+        >
+      </nav>
+    </div>
+
+    <section>
+      <h1 class="heading">Courses</h1>
+      <div id="playlists" class="playlists-container"></div>
+
+      <div id="videoModal" class="modal">
+        <span class="close">&times;</span>
+        <div class="modal-content">
+          <img
+            id="videoThumbnail"
+            class="video-thumbnail"
+            src=""
+            alt="Video Thumbnail"
+          />
+          <video id="modalVideo" controls></video>
+        </div>
+      </div>
+    </section>
+    <footer class="footer">
+      &copy; Copyright by <span>Lalit Deore</span> | All rights reserved!
+    </footer>
+    <script>
+      async function fetchPlaylists() {
+        try {
+          const response = await fetch("http://localhost:3000/api/playlists");
+          const playlists = await response.json();
+          const playlistsContainer = document.getElementById("playlists");
+
+          playlists.forEach((playlist) => {
+            const playlistDiv = document.createElement("div");
+            playlistDiv.classList.add("playlist");
+
+            const imageUrl = `http://localhost:3000/uploads/${playlist.image.filename}`;
+
+            playlistDiv.innerHTML = `
+            <div class="playlist-info">
+              <img src="${imageUrl}" alt="${playlist.name}" class="playlist-image" onclick="openPlaylist('${playlist._id}')">
+              <div class="playlist-details">
+                <h3>${playlist.name}</h3>
+                <p>${playlist.description}</p>
+              </div>
+            </div>
+            <div class="playlist-videos hidden"></div>
+          `;
+
+            playlistsContainer.appendChild(playlistDiv);
+          });
+        } catch (error) {
+          console.error(error);
+          alert("An error occurred while fetching playlists.");
+        }
+      }
+
+      async function openPlaylist(playlistId) {
+        try {
+          const response = await fetch(
+            `http://localhost:3000/api/playlists/${playlistId}`
+          );
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          const playlist = await response.json();
+
+          // Redirect to watch_video.html with playlist ID as query parameter
+          window.location.href = `watch_video.html?playlistId=${playlistId}`;
+        } catch (error) {
+          console.error("Error fetching playlist details:", error);
+          alert(
+            "An error occurred while fetching playlist details. Please try again later."
+          );
+        }
+      }
+
+      async function openVideoModal(videoUrl, thumbnailUrl) {
+        const modal = document.getElementById("videoModal");
+        const modalVideo = document.getElementById("modalVideo");
+        const videoThumbnail = document.getElementById("videoThumbnail");
+
+        modalVideo.src = `http://localhost:3000/uploads/${videoUrl}`;
+        videoThumbnail.src = thumbnailUrl
+          ? `http://localhost:3000/uploads/${thumbnailUrl}`
+          : "";
+        modal.style.display = "block";
+      }
+
+      document.querySelector(".close").addEventListener("click", function () {
+        document.getElementById("videoModal").style.display = "none";
+        document.getElementById("modalVideo").pause();
+      });
+
+      fetchPlaylists();
+    </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", async () => {
+        try {
+          const response = await fetch("profile.html");
+          const profileHtml = await response.text();
+          const profileContainer = document.querySelector(".profile-container");
+          if (profileContainer) {
+            profileContainer.innerHTML = profileHtml;
+          }
+        } catch (error) {
+          console.error("Error including profile HTML:", error);
+        }
+      });
+    </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        function updateProfileDisplay(profileData) {
+          document
+            .querySelectorAll(".profile .name")
+            .forEach((el) => (el.textContent = profileData.name));
+          document
+            .querySelectorAll(".profile .image")
+            .forEach((el) => (el.src = profileData.profilePic || ""));
+        }
+
+        function loadProfile() {
+          const profileData = JSON.parse(localStorage.getItem("profileData"));
+          if (profileData) {
+            updateProfileDisplay(profileData);
+          }
+        }
+
+        loadProfile();
+      });
+    </script>
+
+    <script src="js/script.js"></script>
+  </body>
+</html>

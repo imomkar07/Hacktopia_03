@@ -39,6 +39,26 @@
     color: #ffffff;
 }
 
+/* Chat messages container 
+.chat-messages {
+    padding: 10px;
+    background: #ffffff;
+    flex-grow: 1;
+    overflow-y: auto;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Individual messages 
+.chat-messages div {
+    margin-bottom: 10px;
+    padding: 8px 12px;
+    background: #e1f5fe;
+    border-radius: 10px;
+    display: inline-block;
+    max-width: 80%;
+}*/
+
 /* CSS for aligning messages */
 .message {
     display: flex;
@@ -72,6 +92,7 @@
     color: white;
     align-self: flex-end;
   }
+  
 
 /* Message input form */
 #replyForm {
@@ -124,6 +145,7 @@
 #replyForm button:hover {
     background-color: #0056b3;
 }
+
 
 /* Responsive styling for phones */
 @media (max-width: 600px) {

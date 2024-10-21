@@ -145,6 +145,7 @@ router.put('/playlists/:id', upload.single('playlistImage'), async (req, res) =>
     }
 });
 
+
 router.put('/playlists/:id/videos', upload.array('videos'), async (req, res) => {
     try {
         const playlistId = req.params.id;
@@ -177,6 +178,7 @@ router.put('/playlists/:id/videos', upload.array('videos'), async (req, res) => 
         res.status(500).json({ error: 'An error occurred while adding videos to the playlist' });
     }
 });
+
 
 router.get('/profile', async (req, res) => {
     try {
@@ -288,6 +290,9 @@ router.post('/update', upload.fields([{ name: 'playlistImage', maxCount: 1 }, { 
         res.status(500).json({ success: false, message: 'An error occurred while updating the playlist' });
     }
 });
+
+
+
 router.delete('/playlists/:playlistId/videos/:videoId', async (req, res) => {
     const { playlistId, videoId } = req.params;
     try {
