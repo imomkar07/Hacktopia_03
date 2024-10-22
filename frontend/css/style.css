@@ -1751,5 +1751,83 @@ section{
    padding-right: 2rem;
  }
 
+ .card-container {
+   display: grid;
+   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+   gap: 2rem;
+   padding: 2rem;
+   text-align: center;
+}
 
- 
+.card {
+   background-color: var(--white);
+   padding: 2rem;
+   border-radius: .5rem;
+   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+   cursor: pointer;
+   transition: transform 0.3s ease;
+}
+
+.card:hover {
+   transform: translateY(-10px);
+}
+
+.tests-table {
+   margin-top: 3rem;
+}
+
+.tests-table table {
+   width: 100%;
+   border-collapse: collapse;
+}
+
+.tests-table table th, .tests-table table td {
+   padding: 1rem;
+   border-bottom: 1px solid var(--light-bg);
+   text-align: left;
+}
+
+.card-container {
+   display: flex;
+   justify-content: space-around;
+   flex-wrap: wrap;
+   gap: 30px; /* Increase space between the cards */
+   margin-top: 40px; /* Space between the heading and cards */
+}
+
+.card {
+   width: 200px; /* Increased width */
+   height: 150px; /* Increased height */
+   background-color: #ffffff; /* White background for a cleaner look */
+   border-radius: 15px; /* More rounded corners for a modern look */
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   text-align: center;
+   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Stronger shadow for depth */
+   padding: 20px; /* Added padding for more spacing inside */
+   transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
+   cursor: pointer; /* Pointer cursor on hover */
+}
+
+.card h3 {
+   font-size: 1.8rem; /* Increased font size */
+   color: #333; /* Darker color for better readability */
+}
+
+.card:hover {
+   transform: translateY(-10px); /* Lift effect on hover */
+   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25); /* Darker shadow on hover */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+   .card {
+       width: 200px;
+       height: 150px;
+   }
+
+   .card h3 {
+       font-size: 1.6rem;
+   }
+}
