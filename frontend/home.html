@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>home</title>
+
+    <!-- font awesome cdn link  -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css"
+    />
+
+    <!-- custom css file link  -->
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/user.css" />
+    <link rel="stylesheet" href="css/Admin_teacher.css" />
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+  </head>
+  <body>
+    <header class="header">
+      <section class="flex">
+        <a href="home.html" class="logo">Pathshala.</a>
+
+        <div class="icons">
+          <div id="menu-btn" class="fas fa-bars"></div>
+          <div id="search-btn" class="fas fa-search"></div>
+          <div id="user-btn" class="fas fa-user"></div>
+          <div id="toggle-btn" class="fas fa-sun"></div>
+        </div>
+        <div class="profile">
+          <img src="" class="image" alt="user image" />
+          <h3 class="name">Default Name</h3>
+          <p class="role">student</p>
+        </div>
+      </section>
+    </header>
+
+    <div class="side-bar">
+      <div id="close-btn">
+        <i class="fas fa-times"></i>
+      </div>
+      <div class="profile">
+        <img src="" class="image" alt="user image" />
+        <h3 class="name">Default Name</h3>
+        <p class="role">student</p>
+      </div>
+      <nav class="navbar">
+        <a href="home.html"><i class="fas fa-home"></i><span>Home</span></a>
+        <a href="about.html"
+          ><i class="fas fa-question"></i><span>About</span></a
+        >
+        <a href="user.html"
+          ><i class="fas fa-graduation-cap"></i><span>Courses</span></a
+        >
+        <a href="teacher_profile1.html"
+          ><i class="fas fa-chalkboard-user"></i><span>Teachers</span></a
+        >
+        <a href="user_side_notes.html"
+          ><i class="fa-solid fa-note-sticky"></i><span>Notes</span></a
+        >
+        <a href="Community.html"
+          ><img src="images/message-square-dots-regular-24.png" /><span>Community</span></a
+        >
+        <a href="AI_helper.html"
+          ><img src="images/robotic.png" /><span>AI Helper</span></a
+        >
+        <a href="contact.html"
+          ><i class="fa-regular fa-message"></i><span>Contact Us</span></a
+        >
+        <a href="test.html"><i class="fas fa-book"></i><span>Tests</span></a
+          >
+      </nav>
+    </div>
+
+    <section class="home" id="home">
+      <div class="home-img">
+        <img src="images/home_page.png" alt="" />
+      </div>
+      <div class="home-content heading">
+        <h3>Hello Learners<span class="wave">👋</span></h3>
+        <h3>And Welcome <span class="multiple-text"></span></h3>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero,
+          tenetur. Vitae recusandae natus, fugiat facere ex maiores iste
+          nesciunt maxime dolores cupiditate. Est, doloribus voluptates unde
+          minima illo iste? Dolores.
+        </p>
+      </div>
+    </section>
+
+    <!-- <section class="home-grid">
+      <h1 class="heading">quick options</h1>
+
+      <div class="box-container">
+        <div class="box">
+          <h3 class="title">popular topics</h3>
+          <div class="flex">
+            <a href="#"><i class="fab fa-html5"></i><span>HTML</span></a>
+            <a href="#"><i class="fab fa-css3"></i><span>CSS</span></a>
+            <a href="#"><i class="fab fa-js"></i><span>javascript</span></a>
+            <a href="#"><i class="fab fa-react"></i><span>react</span></a>
+            <a href="#"><i class="fab fa-php"></i><span>PHP</span></a>
+            <a href="#"><i class="fab fa-php"></i><span>PHP</span></a>
+            <a href="#"><i class="fab fa-php"></i><span>PHP</span></a>
+            <a href="#"><i class="fab fa-php"></i><span>PHP</span></a>
+            <a href="#"><i class="fab fa-php"></i><span>PHP</span></a>
+            <a href="#"><i class="fab fa-php"></i><span>PHP</span></a>
+            <a href="#"><i class="fab fa-php"></i><span>PHP</span></a>
+            <a href="#"><i class="fab fa-php"></i><span>PHP</span></a>
+            <a href="#"
+              ><i class="fab fa-bootstrap"></i><span>bootstrap</span></a
+            >
+          </div>
+        </div>
+      </div>
+    </section> -->
+
+    <section class="courses">
+      <h1 class="heading">our courses</h1>
+      <section>
+        <h1>Video Playlists</h1>
+        <div id="playlists" class="playlists-container"></div>
+
+        <div id="videoModal" class="modal">
+          <span class="close">&times;</span>
+          <div class="modal-content">
+            <img
+              id="videoThumbnail"
+              class="video-thumbnail"
+              src=""
+              alt="Video Thumbnail"
+            />
+            <video id="modalVideo" controls></video>
+          </div>
+        </div>
+      </section>
+
+      <div class="more-btn">
+        <a href="user.html" class="inline-option-btn">view all courses</a>
+      </div>
+    </section>
+    <section class="courses">
+      <h1 class="heading">our Teachers</h1>
+      <div class="box-container" id="profilesContainer">
+        <!-- Existing tutor profiles will be dynamically added here -->
+      </div>
+      <div class="more-btn">
+        <a href="teacher_profile1.html" class="inline-option-btn"
+          >view all teachers</a
+        >
+      </div>
+    </section>
+
+    <footer class="footer">
+      &copy; Copyright by <span>Pathshala.</span> | All rights reserved!
+    </footer>
+
+    <!-- custom js file link  -->
+    <script>
+      async function fetchPlaylists() {
+        try {
+          const response = await fetch("http://localhost:3000/api/playlists");
+          const playlists = await response.json();
+          const playlistsContainer = document.getElementById("playlists");
+          const maxVideosToShow = 3;
+          playlists.slice(0, maxVideosToShow).forEach((playlist) => {
+            const playlistDiv = document.createElement("div");
+            playlistDiv.classList.add("playlist");
+
+            const imageUrl = `http://localhost:3000/uploads/${playlist.image.filename}`;
+
+            playlistDiv.innerHTML = `
+            <div class="playlist-info">
+              <img src="${imageUrl}" alt="${playlist.name}" class="playlist-image" onclick="openPlaylist('${playlist._id}')">
+              <div class="playlist-details">
+                <h3>${playlist.name}</h3>
+                <p>${playlist.description}</p>
+              </div>
+            </div>
+            <div class="playlist-videos hidden"></div>
+          `;
+
+            playlistsContainer.appendChild(playlistDiv);
+          });
+        } catch (error) {
+          console.error(error);
+          alert("An error occurred while fetching playlists.");
+        }
+      }
+
+      async function openPlaylist(playlistId) {
+        try {
+          const response = await fetch(
+            `http://localhost:3000/api/playlists/${playlistId}`
+          );
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          const playlist = await response.json();
+
+          window.location.href = `watch_video.html?playlistId=${playlistId}`;
+        } catch (error) {
+          console.error("Error fetching playlist details:", error);
+          alert(
+            "An error occurred while fetching playlist details. Please try again later."
+          );
+        }
+      }
+
+      async function openVideoModal(videoUrl, thumbnailUrl) {
+        const modal = document.getElementById("videoModal");
+        const modalVideo = document.getElementById("modalVideo");
+        const videoThumbnail = document.getElementById("videoThumbnail");
+
+        modalVideo.src = `http://localhost:3000/uploads/${videoUrl}`;
+        videoThumbnail.src = thumbnailUrl
+          ? `http://localhost:3000/uploads/${thumbnailUrl}`
+          : "";
+        modal.style.display = "block";
+      }
+
+      document.querySelector(".close").addEventListener("click", function () {
+        document.getElementById("videoModal").style.display = "none";
+        document.getElementById("modalVideo").pause();
+      });
+
+      fetchPlaylists();
+      function filterPlaylists(query) {
+        const playlists = document.querySelectorAll(".playlist");
+        let visibleCount = 0;
+
+        playlists.forEach((playlist) => {
+          const title = playlist.querySelector(
+            ".playlist-details h3"
+          ).textContent;
+          const description = playlist.querySelector(
+            ".playlist-details p"
+          ).textContent;
+
+          if (
+            title.toLowerCase().includes(query.toLowerCase()) ||
+            description.toLowerCase().includes(query.toLowerCase())
+          ) {
+            playlist.style.display = "block";
+            visibleCount++;
+          } else {
+            playlist.style.display = "none";
+          }
+        });
+
+        // Adjust visibility to show only the top 4 matching results
+        playlists.forEach((playlist, index) => {
+          if (playlist.style.display === "block" && visibleCount > 4) {
+            if (index >= 4) {
+              playlist.style.display = "none";
+            }
+          }
+        });
+      }
+    </script>
+
+    <script>
+      // JavaScript to fetch and display profiles
+
+      document.addEventListener("DOMContentLoaded", () => {
+        loadProfiles();
+      });
+
+      async function loadProfiles() {
+        try {
+          const response = await fetch("http://localhost:3000/api2/profiling");
+          if (!response.ok) {
+            throw new Error("Failed to fetch profiles");
+          }
+          const profiles = await response.json();
+          displayProfiles(profiles.slice(0, 3));
+        } catch (error) {
+          console.error("Error fetching profiles:", error);
+        }
+      }
+
+      function displayProfiles(profiles) {
+        const profilesContainer = document.getElementById("profilesContainer");
+        profilesContainer.innerHTML = "";
+        profiles.forEach((profile) => {
+          const profileElement = document.createElement("div");
+          profileElement.className = "tutor";
+          profileElement.innerHTML = `
+          <img src="/uploads/${profile.profileImage}" alt="Profile Image">
+          <div>
+            <h3>Name: ${profile.name}</h3>
+            <p>Experience: ${profile.experience}</p>
+            <h4>Profession: ${profile.profession}</h4>
+           
+          </div>
+        `;
+          profilesContainer.appendChild(profileElement);
+        });
+      }
+    </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        // Function to update the profile display with the data from local storage
+        function updateProfileDisplay(profileData) {
+          document.querySelectorAll(".profile .name").forEach((el) => {
+            el.textContent = profileData.name;
+          });
+          document.querySelectorAll(".profile .image").forEach((el) => {
+            el.src = profileData.profilePic || "";
+          });
+        }
+
+        // Function to load profile data from local storage
+        function loadProfile() {
+          const profileData = JSON.parse(localStorage.getItem("profileData"));
+          if (profileData) {
+            updateProfileDisplay(profileData);
+            setupTyped(profileData.name);
+          } else {
+            // If no profile data is available, use a default value
+            setupTyped("Professional");
+          }
+        }
+
+        // Function to initialize Typed.js with dynamic profile name and roles
+        function setupTyped(profileName) {
+          var typed = new Typed(".multiple-text", {
+            strings: [`${profileName}`],
+            typeSpeed: 100,
+            backSpeed: 100,
+            backDelay: 1000,
+            loop: true,
+          });
+        }
+
+        loadProfile();
+      });
+    </script>
+
+    <script src="js/script.js"></script>
+  </body>
+</html>

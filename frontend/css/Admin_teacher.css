@@ -1,0 +1,268 @@
+.form-container {
+    display: none;
+    position: relative; /* Added for close button positioning */
+    margin: 20px auto;
+    padding: 20px;
+    max-width: 500px;
+    background: #f0f0f0;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .form-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+  }
+
+  .form-container form label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #555;
+  }
+
+  .form-container form input[type="text"],
+  .form-container form input[type="file"],
+  .form-container form input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .form-container form button[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    background: #28a745;
+    color: #fff;
+    font-size: 18px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: background 0.3s ease;
+  }
+
+  .form-container form button[type="submit"]:hover {
+    background: #218838;
+  }
+
+  /* Close Button Styling */
+  .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #888;
+    transition: color 0.3s ease;
+  }
+
+  .close-btn:hover {
+    color: #333;
+  }
+
+  /* Profile Cards Styling */
+  #profilesContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    margin: 20px auto;
+    max-width: 1200px;
+  }
+
+  .tutor {
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .tutor img {
+    width: 100px; /* Fixing the image size */
+    height: 100px; /* Fixing the image size */
+    object-fit: cover;
+    border-radius: 50%; /* Make the image circular */
+    margin: 20px auto; /* Center the image */
+    display: block; /* Center the image */
+  }
+
+  .tutor div {
+    padding: 15px;
+    text-align: center; /* Center the text */
+  }
+
+  .tutor h3 {
+    margin: 0;
+    font-size: 22px;
+    color: #333;
+  }
+
+  .tutor p {
+    margin: 5px 0;
+    font-size: 16px;
+    color: #555;
+  }
+
+  .tutor h4 {
+    margin: 10px 0;
+    font-size: 18px;
+    color: #777;
+  }
+
+  .tutor:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  }
+
+  .icons {
+    text-align: center;
+    margin: 15px 0;
+  }
+
+  .icons a {
+    display: inline-block;
+    margin: 0 10px;
+    font-size: 24px;
+    color: white; /* White color for icons */
+    background-color: #007bff; /* Adding a background color for contrast */
+    padding: 10px;
+    border-radius: 50%; /* Make icon background circular */
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  .icons a:hover {
+    background-color: #0056b3; /* Darken on hover */
+    color: #fff; /* Maintain white color on hover */
+  }
+
+  /* Offer Box Styling */
+  .box.offer {
+    text-align: center;
+    padding: 20px;
+    background: #f8f8f8;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .box.offer h3 {
+    margin-bottom: 10px;
+    font-size: 24px;
+    color: #444;
+  }
+
+  .box.offer p {
+    margin-bottom: 20px;
+    color: #666;
+  }
+
+  .box.offer button {
+    padding: 10px 20px;
+    background: #007bff;
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+
+  .box.offer button:hover {
+    background: #0056b3;
+  }
+
+  .chat-window {
+    display: none; /* Hidden by default */
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 300px;
+    max-height: 400px;
+    background: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+    z-index: 1000;
+    flex-direction: column;
+    display: flex;
+  }
+
+  .chat-header {
+    background: #007bff;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+    position: relative;
+  }
+
+  .close-btn {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 18px;
+    cursor: pointer;
+  }
+
+  .chat-messages {
+    padding: 10px;
+    overflow-y: auto;
+    flex: 1;
+  }
+
+  .chat-form {
+    display: flex;
+    padding: 10px;
+    border-top: 1px solid #ddd;
+  }
+
+  #chatInput {
+    flex: 1;
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+
+  .send-btn {
+    background: #007bff;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    margin-left: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .message {
+    margin: 5px 0;
+    padding: 10px;
+    border-radius: 10px;
+    max-width: 80%;
+  }
+
+  .message.sent {
+    background: #007bff;
+    color: #fff;
+    align-self: flex-end;
+  }
+
+  .message.received {
+    background: #f1f1f1;
+    color: #333;
+  }
+
+  .delete-btn{
+    background-color: red;
+  }
+
+
+
+  
+  

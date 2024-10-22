@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin & User Notes</title>
+     <!-- Font Awesome CDN link -->
+     <link
+     rel="stylesheet"
+     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css"
+   />
+    <link rel="stylesheet" href="./css/Admin_putting_notes.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <style>
+      /* Sample styles for better visualization (optional) */
+      
+    </style>
+  </head>
+  <body>
+    <header class="header">
+        <section class="flex">
+          <a href="home.html" class="logo">Admin.</a>
+          <form action="/login" method="post" class="search-form">
+            <input
+              type="text"
+              name="search_box"
+              id="search_box"
+              required
+              placeholder="Search courses..."
+              maxlength="100"
+            />
+            <button type="submit" class="fas fa-search"></button>
+          </form>
+  
+          <div class="icons">
+            <div id="menu-btn" class="fas fa-bars"></div>
+            <div id="search-btn" class="fas fa-search"></div>
+            <div id="user-btn" class="fas fa-user"></div>
+            <div id="toggle-btn" class="fas fa-sun"></div>
+          </div>
+        </section>
+      </header>
+  
+      <div class="side-bar">
+        <div id="close-btn">
+          <i class="fas fa-times"></i>
+        </div>
+  
+        <nav class="navbar">
+          <a href="Admin_page.html"><i class="fas fa-home"></i><span>Home</span></a>
+          <a href="Admin.html"
+            ><i class="fas fa-headset"></i><span>Create & Update</span></a
+          >
+          <a href="Admin_playlist_delete.html"
+            ><i class="fas fa-graduation-cap"></i><span>View & Delete Courses</span></a
+          >
+          <a href="Admin_teacher_create_recive1.html"
+            ><i class="fas fa-chalkboard-user"></i><span>Teachers</span></a
+          >
+          <a href="Admin_putting_notes.html"
+          ><i class="fa-solid fa-note-sticky"></i><span>Create Notes</span></a
+        >
+          <a href="Admin_teacher_delete.html"
+            ><img src="images/recycle.png" /><span>Delete Teachers</span></a
+          >
+          <a href="Admin_recive_contact.html"
+            ><i class="fa-regular fa-address-book"></i></i
+            ><span>Recived Contacts</span></a
+          >
+        </nav>
+      </div>
+    <!-- Admin Section -->
+    <section id="admin-section">
+      <div class="admin_new">
+        <h2>Admin Panel - Add New Notes</h2>
+        <div class="admin-form">
+          <label for="note-title">Note Title:</label>
+          <input type="text" id="note-title" placeholder="Enter Note Title" />
+
+          <label for="note-thumbnail">Note Thumbnail:</label>
+          <input type="file" id="note-thumbnail" />
+
+          <div id="files-section">
+            <label for="note-file">Add Files:</label>
+            <input type="text" id="file-name" placeholder="File Name" />
+            <input type="file" id="note-file" />
+            <button type="button" onclick="addFile()">Add File</button>
+          </div>
+
+          <button class="submit-btn" type="button" onclick="createNote()">
+            Create Note
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- User Section -->
+    <section id="user-section">
+      <h2>User Panel - View Notes</h2>
+      <div id="user-notes-container">
+        <!-- Note cards will be appended here -->
+      </div>
+    </section>
+
+    <script>
+      let currentNoteFiles = []; // Store files for the current note
+      let notes = []; // Store all created notes
+
+      // Load notes from localStorage on page load
+      window.onload = function () {
+        const storedNotes = localStorage.getItem("notes");
+        if (storedNotes) {
+          notes = JSON.parse(storedNotes);
+          displayNotes();
+        }
+      };
+
+      // Add file to the current note's file list
+      function addFile() {
+        const fileName = document.getElementById("file-name").value;
+        const fileInput = document.getElementById("note-file");
+
+        if (fileName && fileInput.files.length > 0) {
+          const selectedFile = fileInput.files[0];
+          currentNoteFiles.push({ name: fileName, file: selectedFile });
+
+          const fileSection = document.getElementById("files-section");
+          const fileEntry = document.createElement("div");
+          fileEntry.className = "file-entry";
+          fileEntry.innerHTML = `<p><strong>${fileName}:</strong> ${selectedFile.name}</p>`;
+          fileSection.appendChild(fileEntry);
+
+          // Clear input for the next file
+          document.getElementById("file-name").value = "";
+          fileInput.value = "";
+        } else {
+          alert("Please provide a file name and select a file.");
+        }
+      }
+
+      // Create a new note
+      function createNote() {
+        const noteTitle = document.getElementById("note-title").value;
+        const noteThumbnail =
+          document.getElementById("note-thumbnail").files[0];
+
+        if (noteTitle && noteThumbnail && currentNoteFiles.length > 0) {
+          const reader = new FileReader();
+
+          reader.onload = function (e) {
+            const noteCard = document.createElement("div");
+            noteCard.className = "note-card";
+            noteCard.innerHTML = `
+                        <img src="${e.target.result}" alt="Thumbnail" class="note-icon" style="width: 100px; height: 100px;">
+                        <h3>${noteTitle}</h3>
+                        <button type="button" onclick="showNoteDetails('${noteTitle}')">View Details</button>
+                    `;
+
+            document
+              .getElementById("user-notes-container")
+              .appendChild(noteCard);
+
+            // Save the note
+            notes.push({
+              title: noteTitle,
+              thumbnail: e.target.result,
+              files: currentNoteFiles,
+            });
+
+            // Save notes to localStorage
+            localStorage.setItem("notes", JSON.stringify(notes));
+
+            // Clear the form
+            clearForm();
+          };
+
+          reader.readAsDataURL(noteThumbnail);
+        } else {
+          alert("Please fill all details and add at least one file.");
+        }
+      }
+
+      // Display notes from the notes array
+      function displayNotes() {
+        const userNotesContainer = document.getElementById(
+          "user-notes-container"
+        );
+        userNotesContainer.innerHTML = ""; // Clear previous view
+        notes.forEach((note) => {
+          const noteCard = document.createElement("div");
+          noteCard.className = "note-card";
+          noteCard.innerHTML = `
+                    <img src="${note.thumbnail}" alt="Thumbnail" class="note-icon" style="width: 100px; height: 100px;">
+                    <h3>${note.title}</h3>
+                    <button type="button" onclick="showNoteDetails('${note.title}')">View Details</button>
+                `;
+          userNotesContainer.appendChild(noteCard);
+        });
+      }
+
+      // Display note details
+      // Display note details
+      function showNoteDetails(title) {
+        const selectedNote = notes.find((note) => note.title === title);
+
+        if (selectedNote) {
+          const noteContent = document.createElement("div");
+          noteContent.className = "note-details";
+          noteContent.innerHTML = `
+            <h4>${selectedNote.title}</h4>
+            <img src="${
+              selectedNote.thumbnail
+            }" alt="Thumbnail" style="width: 150px;">
+            <h5>Attached Files:</h5>
+            <ul>
+                ${selectedNote.files
+                  .map((file) => {
+                    // Check if the file object is valid
+                    if (file.file instanceof File) {
+                      return `<li>${file.name}: <a href="${URL.createObjectURL(
+                        file.file
+                      )}" download="${file.file.name}">Download</a></li>`;
+                    } else {
+                      return `<li>${file.name}: Invalid file</li>`;
+                    }
+                  })
+                  .join("")}
+            </ul>
+            <button type="button" onclick="goBack()">Go Back</button>
+        `;
+
+          const userNotesContainer = document.getElementById(
+            "user-notes-container"
+          );
+          userNotesContainer.innerHTML = ""; // Clear previous view
+          userNotesContainer.appendChild(noteContent);
+        } else {
+          alert("Note not found.");
+        }
+      }
+
+      // Clear the form after creating a note
+      function clearForm() {
+        document.getElementById("note-title").value = "";
+        document.getElementById("note-thumbnail").value = "";
+        document.getElementById("files-section").innerHTML = `
+                <label for="note-file">Add Files:</label>
+                <input type="text" id="file-name" placeholder="File Name">
+                <input type="file" id="note-file">
+                <button type="button" onclick="addFile()">Add File</button>
+            `;
+        currentNoteFiles = []; // Reset file list
+      }
+
+      // Return to the list of notes after viewing details
+      function goBack() {
+        const userNotesContainer = document.getElementById(
+          "user-notes-container"
+        );
+        userNotesContainer.innerHTML = "";
+        displayNotes(); // Refresh notes display
+      }
+    </script>
+    <script src="js/script.js"></script
+  </body>
+</html>
+

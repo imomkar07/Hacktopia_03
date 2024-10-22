@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chatbot</title>
+    <!-- font awesome cdn link  -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css"
+    />
+    <link rel="stylesheet" href="css/helper.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/user.css" />
+    <link rel="stylesheet" href="css/Admin_teacher.css" />
+  </head>
+  <body>
+    <header class="header">
+      <section class="flex">
+        <a href="home.html" class="logo">Pathshala.</a>
+
+        <div class="icons">
+          <div id="menu-btn" class="fas fa-bars"></div>
+          <div id="search-btn" class="fas fa-search"></div>
+          <div id="user-btn" class="fas fa-user"></div>
+          <div id="toggle-btn" class="fas fa-sun"></div>
+        </div>
+        <div class="profile">
+          <img src="" class="image" alt="user image" />
+          <h3 class="name">Default Name</h3>
+          <p class="role">student</p>
+        </div>
+      </section>
+    </header>
+
+    <div class="side-bar">
+      <div id="close-btn">
+        <i class="fas fa-times"></i>
+      </div>
+      <div class="profile">
+        <img src="" class="image" alt="user image" />
+        <h3 class="name">Default Name</h3>
+        <p class="role">student</p>
+      </div>
+      <nav class="navbar">
+        <a href="home.html"><i class="fas fa-home"></i><span>Home</span></a>
+        <a href="about.html"
+          ><i class="fas fa-question"></i><span>About</span></a
+        >
+        <a href="user.html"
+          ><i class="fas fa-graduation-cap"></i><span>Courses</span></a
+        >
+        <a href="teacher_profile1.html"
+          ><i class="fas fa-chalkboard-user"></i><span>Teachers</span></a
+        >
+        <a href="user_side_notes.html"
+          ><i class="fa-solid fa-note-sticky"></i><span>Notes</span></a
+        >
+        <a href="AI_helper.html"
+          ><img src="images/robotic.png" /><span>AI Helper</span></a
+        >
+        <a href="contact.html"
+          ><i class="fa-regular fa-message"></i><span>Contact Us</span></a
+        >
+        <a href="test.html"><i class="fas fa-book"></i><span>Tests</span></a
+            >
+      </nav>
+    </div>
+
+    <div class="sideNavigation">
+      <div class="topBarAction">
+        <div class="sideNavButton">
+          <button>
+            <i class="fas fa-plus"></i>
+            <span class="collapseText" onclick="newChat()">New Chat</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="chatWindow">
+        <div class="chatContent">
+          <!-- Messages will be dynamically added here -->
+          <div class="messageContainer botResponse">
+            <div class="icon">
+              <i class="fas fa-robot"></i>
+            </div>
+            <p>Hello Learners! How can I help you today?</p>
+          </div>
+        </div>
+        <div class="inputArea">
+          <input type="text" placeholder="Enter prompt here..." />
+          <div class="iconGroup">
+            <i class="fas fa-paper-plane" onclick="sendMessage()"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const inputArea = document.querySelector(".inputArea input");
+      const chatContent = document.querySelector(".chatContent");
+
+      function getGeminiResponse(question) {
+        // Create elements for user question and bot response
+        const userQuestion = document.createElement("div");
+        userQuestion.className = "messageContainer userMessage";
+        userQuestion.innerHTML = `
+        <i class="fas fa-user"></i>
+        <p>${question}</p>
+        `;
+
+        const botResponse = document.createElement("div");
+        botResponse.className = "messageContainer botResponse";
+
+        // Add loading animation to bot response initially
+        botResponse.innerHTML = `
+        <div class="reply">
+          <div class="icon">
+            <i class="fas fa-robot"></i>
+          </div><p> ...</p>
+        </div>
+        
+        
+      `;
+
+        // Append user question and bot response to chat content
+        chatContent.appendChild(userQuestion);
+        chatContent.appendChild(botResponse);
+
+        // Fetch response from API
+        const AIURL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=AIzaSyDihGMfW77F8e2P0UvjAo6P0hkpXmwFfcY`; // Replace with your actual API key
+        fetch(AIURL, {
+          method: "POST",
+          body: JSON.stringify({
+            contents: [{ parts: [{ text: question }] }],
+          }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            // Replace loading animation with actual response
+            botResponse.innerHTML = `
+            <i class="fas fa-robot"></i>
+            <p>${data.candidates[0].content.parts[0].text}</p>
+          `;
+          });
+
+        // Scroll chat window to bottom
+        chatContent.scrollTop = chatContent.scrollHeight;
+      }
+
+      function sendMessage() {
+        const question = inputArea.value.trim();
+        if (question !== "") {
+          getGeminiResponse(question);
+          inputArea.value = "";
+        }
+      }
+
+      function newChat() {
+        chatContent.innerHTML = "";
+        document.querySelector(".startContent").style.display = "block";
+      }
+    </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        function updateProfileDisplay(profileData) {
+          document
+            .querySelectorAll(".profile .name")
+            .forEach((el) => (el.textContent = profileData.name));
+          document
+            .querySelectorAll(".profile .image")
+            .forEach((el) => (el.src = profileData.profilePic || ""));
+        }
+
+        function loadProfile() {
+          const profileData = JSON.parse(localStorage.getItem("profileData"));
+          if (profileData) {
+            updateProfileDisplay(profileData);
+          }
+        }
+
+        loadProfile();
+      });
+    </script>
+    <script src="js/script.js"></script>
+  </body>
+</html>
+

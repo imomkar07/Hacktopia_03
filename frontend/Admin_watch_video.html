@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Watch Videos</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/watch_video.css" />
+    <link rel="stylesheet" href="css/Admin_delete_video.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css"
+    />
+  </head>
+  <body>
+    <header class="header">
+      <section class="flex">
+        <a href="home.html" class="logo">Admin.</a>
+        <form action="/login" method="post"></form>
+
+        <div class="icons">
+          <div id="menu-btn" class="fas fa-bars"></div>
+          <div id="search-btn" class="fas fa-search"></div>
+          <div id="user-btn" class="fas fa-user"></div>
+          <div id="toggle-btn" class="fas fa-sun"></div>
+        </div>
+      </section>
+    </header>
+
+    <div class="side-bar">
+      <div id="close-btn">
+        <i class="fas fa-times"></i>
+      </div>
+
+      <nav class="navbar">
+        <a href="Admin_page.html"><i class="fas fa-home"></i><span>Home</span></a>
+        <a href="Admin.html"
+          ><i class="fas fa-headset"></i><span>Create & Update</span></a
+        >
+        <a href="Admin_playlist_delete.html"
+          ><i class="fas fa-graduation-cap"></i><span>View & Delete Courses</span></a
+        >
+        <a href="Admin_teacher_create_recive1.html"
+          ><i class="fas fa-chalkboard-user"></i><span>Teachers</span></a
+        >
+        <a href="Admin_putting_notes.html"
+          ><i class="fa-solid fa-note-sticky"></i><span>Create Notes</span></a
+        >
+        <a href="Admin_teacher_delete.html"
+          ><img src="images/recycle.png" /><span>Delete Teachers</span></a
+        >
+        <a href="Admin_recive_contact.html"
+          ><i class="fa-regular fa-address-book"></i></i
+          ><span>Recived Contacts</span></a
+        >
+      </nav>
+    </div>
+
+    <section>
+      <h1 class="heading">Playlist</h1>
+      <h1 id="playlistName">Playlist Name</h1>
+      <img
+        id="playlistImage"
+        src=""
+        alt="Playlist Image"
+        class="playlist-image"
+      />
+      <p id="playlistDescription">Playlist Description</p>
+      <div id="videos" class="videos-container"></div>
+    </section>
+    <footer class="footer">
+      &copy; Copyright by <span>Pathshala.</span> | All rights reserved!
+    </footer>
+    <script>
+      let playlistId;
+
+      async function fetchPlaylistDetails() {
+        const urlParams = new URLSearchParams(window.location.search);
+        playlistId = urlParams.get("playlistId");
+
+        if (!playlistId) {
+          alert("No playlist ID found in URL.");
+          return;
+        }
+
+        try {
+          const response = await fetch(
+            `http://localhost:3000/api/playlists/${playlistId}`
+          );
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          const playlist = await response.json();
+
+          document.getElementById("playlistName").innerText = playlist.name;
+          document.getElementById(
+            "playlistImage"
+          ).src = `http://localhost:3000/uploads/${playlist.image.filename}`;
+          document.getElementById("playlistDescription").innerText =
+            playlist.description;
+
+          const videosContainer = document.getElementById("videos");
+          videosContainer.innerHTML = "";
+
+          playlist.videos.forEach((video) => {
+            const videoDiv = document.createElement("div");
+            videoDiv.classList.add("video-item");
+            videoDiv.id = `video-${video._id}`; // Set ID for the video element
+
+            const videoUrl = `http://localhost:3000/uploads/${video.filename}`;
+            const thumbnailUrl = video.thumbnail
+              ? `http://localhost:3000/uploads/${video.thumbnail.filename}`
+              : "";
+
+            videoDiv.innerHTML = `
+              <img src="${thumbnailUrl}" alt="Video Thumbnail" class="video-thumbnail" onclick="openVideo('${videoUrl}')">
+              <p class="video-name">${video.heading || "Untitled Video"}</p>
+              <button class="delete-btn" onclick="deleteVideo('${
+                video._id
+              }')">Delete</button>
+            `;
+
+            videosContainer.appendChild(videoDiv);
+          });
+        } catch (error) {
+          console.error("Error fetching playlist details:", error);
+          alert("An error occurred while fetching playlist details.");
+        }
+      }
+
+      function openVideo(videoUrl) {
+        if (videoUrl) {
+          window.open(videoUrl, "_blank");
+        } else {
+          alert("No video URL found.");
+        }
+      }
+
+      async function deleteVideo(videoId) {
+        if (confirm("Are you sure you want to delete this video?")) {
+          try {
+            console.log(`Attempting to delete video with ID: ${videoId}`);
+            const response = await fetch(
+              `http://localhost:3000/api/playlists/${playlistId}/videos/${videoId}`,
+              {
+                method: "DELETE",
+              }
+            );
+
+            if (!response.ok) {
+              const errorData = await response.json();
+              throw new Error(
+                `Failed to delete video. Server responded with: ${errorData.message}`
+              );
+            }
+
+            // Remove the video element from the DOM
+            const videoElement = document.getElementById(`video-${videoId}`);
+            if (videoElement) {
+              videoElement.parentNode.removeChild(videoElement);
+            }
+
+            alert("Video deleted successfully.");
+          } catch (error) {
+            console.error("Error deleting video:", error);
+            alert(
+              `An error occurred while deleting the video. ${error.message}`
+            );
+          }
+        }
+      }
+
+      fetchPlaylistDetails();
+    </script>
+
+    <script src="js/script.js"></script>
+  </body>
+</html>

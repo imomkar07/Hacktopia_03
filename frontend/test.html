@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tests</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" />
+    <link rel="stylesheet" href="css/style.css"> <!-- Link to your existing CSS file -->
+    <link rel="stylesheet" href="css/Admin_teacher.css" />
+    <link rel="stylesheet" href="css/chatform2.css" />
+    <style>
+        body {
+            font-size: 1.2rem;
+            line-height: 1.6;
+        }
+    
+        h1, h2, h3 {
+            font-size: 2rem;
+        }
+    
+        .card h3 {
+            font-size: 1.6rem;
+        }
+    
+        .tests-table table th, .tests-table table td {
+            font-size: 1.4rem;
+        }
+    
+        .btn {
+            font-size: 1.3rem;
+        }
+
+        .hidden {
+            display: none; /* Ensure hidden elements are not visible */
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <section class="flex">
+            <a href="home.html" class="logo">Pathshala.</a>
+            <div class="icons">
+                <div id="menu-btn" class="fas fa-bars"></div>
+                <div id="search-btn" class="fas fa-search"></div>
+                <div id="user-btn" class="fas fa-user"></div>
+                <div id="toggle-btn" class="fas fa-sun"></div>
+            </div>
+            <div class="profile">
+                <img src="" class="image" alt="user image" />
+                <h3 class="name">Default Name</h3>
+                <p class="role">student</p>
+            </div>
+        </section>
+    </header>
+  
+    <div class="side-bar">
+        <div id="close-btn"><i class="fas fa-times"></i></div>
+        <div class="profile">
+            <img src="" class="image" alt="user image" />
+            <h3 class="name">Default Name</h3>
+            <p class="role">student</p>
+        </div>
+        <nav class="navbar">
+            <a href="home.html"><i class="fas fa-home"></i><span>Home</span></a>
+            <a href="about.html"><i class="fas fa-question"></i><span>About</span></a>
+            <a href="user.html"><i class="fas fa-graduation-cap"></i><span>Courses</span></a>
+            <a href="teacher_profile1.html"><i class="fas fa-chalkboard-user"></i><span>Teachers</span></a>
+            <a href="AI_helper.html"><img src="images/robotic.png" /><span>AI Helper</span></a>
+            <a href="contact.html"><i class="fa-regular fa-message"></i><span>Contact Us</span></a>
+            <a href="test.html"><i class="fas fa-book"></i><span>Tests</span></a>
+        </nav>
+    </div>
+
+    <section class="tests-section">
+        <h1 class="heading">Choose a Test Category</h1>
+        <div class="card-container">
+            <div class="card" onclick="showTests('html')">
+                <h3>HTML Test</h3>
+            </div>
+            <div class="card" onclick="showTests('css')">
+                <h3>CSS Test</h3>
+            </div>
+            <div class="card" onclick="showTests('javascript')">
+                <h3>JavaScript Test</h3>
+            </div>
+            <div class="card" onclick="showTests('php')">
+                <h3>PHP Test</h3>
+            </div>
+            <div class="card" onclick="showTests('bootstrap')">
+                <h3>Bootstrap Test</h3>
+            </div>
+        </div>
+
+        <div class="tests-table hidden" id="testsTable">
+            <h2 id="testCategoryTitle">Tests</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Test Name</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="testTableBody">
+                    <!-- Dynamic rows will be inserted here -->
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <script>
+        // Object containing test categories and tests
+        const tests = {
+            html: [
+                { name: "HTML Test 1" },
+                { name: "HTML Test 2" },
+                { name: "HTML Test 3" },
+            ],
+            css: [
+                { name: "CSS Test 1" },
+                { name: "CSS Test 2" },
+            ],
+            javascript: [
+                { name: "JavaScript Test 1" },
+                { name: "JavaScript Test 2" },
+            ],
+            php: [
+                { name: "PHP Test 1" },
+                { name: "PHP Test 2" },
+            ],
+            bootstrap: [
+                { name: "Bootstrap Test 1" },
+                { name: "Bootstrap Test 2" },
+            ]
+        };
+
+        // Function to display the tests when a category is clicked
+        function showTests(category) {
+            const testTableBody = document.getElementById("testTableBody");
+            const testsTable = document.getElementById("testsTable");
+            const testCategoryTitle = document.getElementById("testCategoryTitle");
+
+            // Set the category title
+            testCategoryTitle.textContent = `${category.toUpperCase()} Tests`;
+
+            // Clear existing table rows
+            testTableBody.innerHTML = "";
+
+            // Loop through the selected category's tests and add them to the table
+            tests[category].forEach(test => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${test.name}</td>
+                    <td>
+                        <a href="#" class="btn" onclick="takeTest('${category}', '${test.name}', event)">Take Test</a>
+                    </td>
+                `;
+                testTableBody.appendChild(row);
+            });
+
+            // Show the table by removing the hidden class
+            testsTable.classList.remove("hidden");
+        }
+
+        // Function to handle the redirection to taketest.html and store test info in localStorage
+        function takeTest(category, testName, event) {
+            event.preventDefault(); // Prevent the default link behavior
+            localStorage.setItem('selectedTestCategory', category); // Store the test category
+            localStorage.setItem('selectedTestName', testName); // Store the specific test name
+            window.location.href = 'taketest.html'; // Redirect to the taketest.html page
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            function updateProfileDisplay(profileData) {
+                document
+                    .querySelectorAll(".profile .name")
+                    .forEach((el) => (el.textContent = profileData.name));
+                document
+                    .querySelectorAll(".profile .image")
+                    .forEach((el) => (el.src = profileData.profilePic || ""));
+            }
+
+            function loadProfile() {
+                const profileData = JSON.parse(localStorage.getItem("profileData"));
+                if (profileData) {
+                    updateProfileDisplay(profileData);
+                }
+            }
+
+            loadProfile();
+        });
+    </script>
+
+</body>
+</html>

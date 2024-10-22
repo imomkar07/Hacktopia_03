@@ -1,0 +1,65 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  
+  h1 {
+    text-align: center;
+    margin: 20px 0;
+    color: #333;
+    font-size: larger;
+  }
+  
+  .playlist-image {
+    display: block;
+    margin: 0 auto;
+    width: 300px;
+    border-radius: 8px;
+    height: auto;
+  }
+  
+  #playlistDescription {
+    text-align: center;
+    margin: 20px auto;
+    width: 80%;
+    max-width: 600px;
+    color: #777;
+  }
+  
+  .videos-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 20px;
+  }
+  
+  .video-item {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 10px;
+    width: 300px;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  
+  .video-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
+  
+  .video-thumbnail {
+    width: 100%;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    height: 300px;
+    object-fit: cover;
+    cursor: pointer;
+  }
+  
+  .video-name {
+    padding: 15px;
+    color: #333;
+    text-align: center;
+  }
+  

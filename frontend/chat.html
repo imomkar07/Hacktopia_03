@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chat</title>
+
+    <!-- font awesome cdn link  -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css"
+    />
+
+    <!-- custom css file link  -->
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/user.css" />
+    <link rel="stylesheet" href="css/Admin_teacher.css" />
+    <link rel="stylesheet" href="css/community.css">
+    <link rel="stylesheet" href="css/chat.css">
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+  </head>
+  <body>
+    <header class="header">
+      <section class="flex">
+        <a href="home.html" class="logo">Pathshala.</a>
+
+        <div class="icons">
+          <div id="menu-btn" class="fas fa-bars"></div>
+          <div id="search-btn" class="fas fa-search"></div>
+          <div id="user-btn" class="fas fa-user"></div>
+          <div id="toggle-btn" class="fas fa-sun"></div>
+        </div>
+        <div class="profile">
+          <img src="" class="image" alt="user image" />
+          <h3 class="name">Default Name</h3>
+          <p class="role">student</p>
+        </div>
+      </section>
+    </header>
+
+    <div class="side-bar">
+      <div id="close-btn">
+        <i class="fas fa-times"></i>
+      </div>
+      <div class="profile">
+        <img src="" class="image" alt="user image" />
+        <h3 class="name">Default Name</h3>
+        <p class="role">student</p>
+      </div>
+      <nav class="navbar">
+        <a href="home.html"><i class="fas fa-home"></i><span>Home</span></a>
+        <a href="about.html"
+          ><i class="fas fa-question"></i><span>About</span></a
+        >
+        <a href="user.html"
+          ><i class="fas fa-graduation-cap"></i><span>Courses</span></a
+        >
+        <a href="teacher_profile1.html"
+          ><i class="fas fa-chalkboard-user"></i><span>Teachers</span></a
+        >
+        <a href="Community.html"
+          ><img src="images/message-square-dots-regular-24.png" /><span>Community</span></a
+        >
+        <a href="AI_helper.html"
+          ><img src="images/robotic.png" /><span>AI Helper</span></a
+        >
+        <a href="contact.html"
+          ><i class="fa-regular fa-message"></i><span>Contact Us</span></a
+        >
+      </nav>
+    </div>
+    <h1 class="heading"></h1>
+    <section class="chat-container">
+        <div class="chat-box" id="chat-box">
+            <!-- Messages will be displayed here -->
+        </div>
+        <div class="input-container">
+            <input type="file" id="file-input" accept="*/*" style="display: none;" />
+            <button id="file-button" title="Send File">
+                <i class="fas fa-paperclip"></i> <!-- Paperclip icon for file attachment -->
+            </button>
+            <input type="text" id="message-input" placeholder="Type your message..." />
+            <button id="send-button">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+    </section>
+    
+
+
+
+    <script src="js/script.js"></script>
+    <script>
+      
+    function getQueryParam(param) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(param);
+    }
+
+    const communityTitle = getQueryParam('title');
+
+    if (communityTitle) {
+    document.querySelector('.heading').textContent = communityTitle;
+    document.title = communityTitle + " Chat"; 
+    }
+
+    // Function to get the query parameter value by name
+function getQueryParam(param) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(param);
+}
+
+// Get the community title to create a unique localStorage key
+const localStorageKey = `chat_${communityTitle}`;
+
+// Function to load messages from localStorage
+function loadMessages() {
+    const messages = JSON.parse(localStorage.getItem(localStorageKey)) || [];
+    messages.forEach(message => {
+        appendMessageToChatBox(message);
+    });
+}
+
+// Function to append a message to the chat box
+function appendMessageToChatBox(message) {
+    const messageElement = document.createElement('div');
+    messageElement.classList.add('message');
+
+    // Check if message contains a file
+    if (message.file) {
+        const fileType = message.file.type;
+        const fileURL = message.file.url;
+
+        if (fileType.startsWith('image/')) {
+            const imgElement = document.createElement('img');
+            imgElement.src = fileURL;
+            imgElement.style.maxWidth = '100%'; // Responsive image
+            imgElement.style.borderRadius = '5px'; // Optional styling
+            messageElement.appendChild(imgElement);
+        } else if (fileType === 'application/pdf') {
+            const pdfLink = document.createElement('a');
+            pdfLink.href = fileURL; // Use the Object URL as the link
+            pdfLink.target = '_blank'; // Open in new tab
+            pdfLink.textContent = 'View PDF: ' + message.file.name;
+            pdfLink.style.display = 'block'; // Block for new line
+            messageElement.appendChild(pdfLink);
+        } else {
+            const fileLink = document.createElement('a');
+            fileLink.href = fileURL; // Use the Object URL as the link
+            fileLink.target = '_blank'; // Open in new tab
+            fileLink.textContent = 'Download File: ' + message.file.name;
+            fileLink.style.display = 'block'; // Block for new line
+            messageElement.appendChild(fileLink);
+        }
+    }
+
+    // Append text message if available
+    if (message.text) {
+        const textNode = document.createTextNode(message.text);
+        messageElement.appendChild(textNode);
+    }
+
+    // Append the message to the chat box
+    document.getElementById('chat-box').appendChild(messageElement);
+}
+
+// Load messages when the page loads
+loadMessages();
+
+// Send button event listener
+document.getElementById('send-button').addEventListener('click', function () {
+    const inputField = document.getElementById('message-input');
+    const messageText = inputField.value;
+    const fileInput = document.getElementById('file-input');
+
+    const message = {
+        text: messageText.trim() !== '' ? messageText : null,
+        file: null
+    };
+
+    // Check if a file is selected
+    if (fileInput.files.length > 0) {
+        const file = fileInput.files[0];
+        const fileURL = URL.createObjectURL(file);
+        message.file = { url: fileURL, name: file.name, type: file.type };
+    }
+
+    // Store the message in localStorage
+    const messages = JSON.parse(localStorage.getItem(localStorageKey)) || [];
+    messages.push(message);
+    localStorage.setItem(localStorageKey, JSON.stringify(messages));
+
+    // Append the message to the chat box
+    appendMessageToChatBox(message);
+
+    // Clear the input fields
+    inputField.value = '';
+    fileInput.value = ''; // Clear file input
+
+    // Scroll to the bottom of the chat box
+    document.getElementById('chat-box').scrollTop = document.getElementById('chat-box').scrollHeight;
+});
+
+// Allow pressing 'Enter' to send a message
+document.getElementById('message-input').addEventListener('keypress', function (event) {
+    if (event.key === 'Enter') {
+        document.getElementById('send-button').click();
+    }
+});
+
+// Open file input when clicking on the file button
+document.getElementById('file-button').addEventListener('click', function () {
+    document.getElementById('file-input').click();
+});
+
+
+
+
+
+    </script>
+  </body>
+</html>

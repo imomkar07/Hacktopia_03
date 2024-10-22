@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <!-- Font Awesome CDN link -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css"
+    />
+    <!-- Custom CSS file link -->
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/user.css" />
+  </head>
+  <body>
+    <header class="header">
+      <section class="flex">
+        <a href="home.html" class="logo">Admin.</a>
+        <form action="/login" method="post" class="search-form">
+          <input
+            type="text"
+            name="search_box"
+            id="search_box"
+            required
+            placeholder="Search courses..."
+            maxlength="100"
+          />
+          <button type="submit" class="fas fa-search"></button>
+        </form>
+
+        <div class="icons">
+          <div id="menu-btn" class="fas fa-bars"></div>
+          <div id="search-btn" class="fas fa-search"></div>
+          <div id="user-btn" class="fas fa-user"></div>
+          <div id="toggle-btn" class="fas fa-sun"></div>
+        </div>
+      </section>
+    </header>
+
+    <div class="side-bar">
+      <div id="close-btn">
+        <i class="fas fa-times"></i>
+      </div>
+
+      <nav class="navbar">
+        <a href="Admin_page.html"><i class="fas fa-home"></i><span>Home</span></a>
+        <a href="Admin.html"
+          ><i class="fas fa-headset"></i><span>Create & Update</span></a
+        >
+        <a href="Admin_playlist_delete.html"
+          ><i class="fas fa-graduation-cap"></i><span>View & Delete Courses</span></a
+        >
+        <a href="Admin_teacher_create_recive1.html"
+          ><i class="fas fa-chalkboard-user"></i><span>Teachers</span></a
+        >
+        <a href="Admin_putting_notes.html"
+          ><i class="fa-solid fa-note-sticky"></i><span>Create Notes</span></a
+        >
+        <a href="Admin_teacher_delete.html"
+          ><img src="images/recycle.png" /><span>Delete Teachers</span></a
+        >
+        <a href="Admin_recive_contact.html"
+          ><i class="fa-regular fa-address-book"></i></i
+          ><span>Recived Contacts</span></a
+        >
+      </nav>
+    </div>
+    <section >
+      <h1 class="heading">Admin Courses </h1>
+      <div id="playlists" class="playlists-container"></div>
+
+      <div id="videoModal" class="modal">
+        <span class="close">&times;</span>
+        <div class="modal-content">
+          <img
+            id="videoThumbnail"
+            class="video-thumbnail"
+            src=""
+            alt="Video Thumbnail"
+          />
+          <video id="modalVideo" controls></video>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      &copy; Copyright by <span>Pathshala.</span> | All rights reserved!
+    </footer>
+
+    <!-- Custom JS file link -->
+    <script>
+      async function filterPlaylists(searchTerm) {
+        const playlistsContainer = document.getElementById("playlists");
+        const playlists = playlistsContainer.getElementsByClassName("playlist");
+
+        Array.from(playlists).forEach((playlist) => {
+          const playlistName = playlist
+            .querySelector(".playlist-details h3")
+            .textContent.toLowerCase();
+          if (playlistName.includes(searchTerm.toLowerCase())) {
+            playlist.style.display = "block";
+          } else {
+            playlist.style.display = "none";
+          }
+        });
+      }
+
+      async function fetchPlaylists() {
+        try {
+          const response = await fetch("http://localhost:3000/api/playlists");
+          const playlists = await response.json();
+          const playlistsContainer = document.getElementById("playlists");
+
+          playlists.forEach((playlist) => {
+            const playlistDiv = document.createElement("div");
+            playlistDiv.classList.add("playlist");
+            playlistDiv.id = playlist._id;
+
+            const imageUrl = `http://localhost:3000/uploads/${playlist.image.filename}`;
+
+            playlistDiv.innerHTML = `
+              <div class="playlist-info">
+                <img src="${imageUrl}" alt="${playlist.name}" class="playlist-image" onclick="openPlaylist('${playlist._id}')">
+                <div class="playlist-details">
+                  <h3>${playlist.name}</h3>
+                  <p>${playlist.description}</p>
+                </div>
+                <div class="delete-btn-container">
+                  <button class="delete-btn" onclick="deletePlaylist('${playlist._id}')">Delete</button>
+                </div>
+              </div>
+              <div class="playlist-videos hidden"></div>
+            `;
+
+            playlistsContainer.appendChild(playlistDiv);
+          });
+        } catch (error) {
+          console.error(error);
+          alert("An error occurred while fetching playlists.");
+        }
+      }
+
+      const searchBox = document.getElementById("search_box");
+      searchBox.addEventListener("input", function () {
+        const searchTerm = this.value.trim();
+        filterPlaylists(searchTerm);
+      });
+
+      async function deletePlaylist(playlistId) {
+        try {
+          const response = await fetch(
+            `http://localhost:3000/api/playlists/${playlistId}`,
+            {
+              method: "DELETE",
+            }
+          );
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          // Remove the playlist element from the DOM
+          const playlistElement = document.getElementById(playlistId);
+          playlistElement.parentNode.removeChild(playlistElement);
+          alert("Playlist deleted successfully!");
+        } catch (error) {
+          console.error("Error deleting playlist:", error);
+          alert("An error occurred while deleting the playlist.");
+        }
+      }
+
+      async function openPlaylist(playlistId) {
+        try {
+          const response = await fetch(
+            `http://localhost:3000/api/playlists/${playlistId}`
+          );
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          const playlist = await response.json();
+
+          // Redirect to watch_video.html with playlist ID as query parameter
+          window.location.href = `Admin_watch_video.html?playlistId=${playlistId}`;
+        } catch (error) {
+          console.error("Error fetching playlist details:", error);
+          alert(
+            "An error occurred while fetching playlist details. Please try again later."
+          );
+        }
+      }
+
+      async function openVideoModal(videoUrl, thumbnailUrl) {
+        const modal = document.getElementById("videoModal");
+        const modalVideo = document.getElementById("modalVideo");
+        const videoThumbnail = document.getElementById("videoThumbnail");
+
+        modalVideo.src = `http://localhost:3000/uploads/${videoUrl}`;
+        videoThumbnail.src = thumbnailUrl
+          ? `http://localhost:3000/uploads/${thumbnailUrl}`
+          : "";
+        modal.style.display = "block";
+      }
+
+      document.querySelector(".close").addEventListener("click", function () {
+        document.getElementById("videoModal").style.display = "none";
+        document.getElementById("modalVideo").pause();
+      });
+
+      fetchPlaylists();
+    </script>
+    <script src="js/script.js"></script>
+  </body>
+</html>

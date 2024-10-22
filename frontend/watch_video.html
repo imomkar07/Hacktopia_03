@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Watch Videos</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/watch_video.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css"
+    />
+  </head>
+  <body>
+    <header class="header">
+      <section class="flex">
+        <a href="home.html" class="logo">Pathshala.</a>
+        <form action="/login" method="post"></form>
+
+        <div class="icons">
+          <div id="menu-btn" class="fas fa-bars"></div>
+          <div id="search-btn" class="fas fa-search"></div>
+          <div id="user-btn" class="fas fa-user"></div>
+          <div id="toggle-btn" class="fas fa-sun"></div>
+        </div>
+
+        <div id="user-profile" class="profile">
+          <img src="" class="image" alt="user image" />
+          <h3 class="name">Default Name</h3>
+          <p class="role">student</p>
+        </div>
+      </section>
+    </header>
+
+    <div class="side-bar">
+      <div id="close-btn">
+        <i class="fas fa-times"></i>
+      </div>
+
+      <div class="profile">
+        <img src="" class="image" alt="user image" />
+        <h3 class="name">Default Name</h3>
+        <p class="role">student</p>
+      </div>
+
+      <nav class="navbar">
+        <a href="home.html"><i class="fas fa-home"></i><span>Home</span></a>
+        <a href="about.html"
+          ><i class="fas fa-question"></i><span>About</span></a
+        >
+        <a href="user.html"
+          ><i class="fas fa-graduation-cap"></i><span>Courses</span></a
+        >
+        <a href="teacher_profile1.html"
+          ><i class="fas fa-chalkboard-user"></i><span>Teachers</span></a
+        >
+        <a href="Community.html"
+          ><img src="images/message-square-dots-regular-24.png" /><span>Community</span></a
+        >
+        <a href="AI_helper.html"
+          ><img src="images/robotic.png" /><span>AI Helper</span></a
+        >
+        <a href="contact.html"
+          ><i class="fa-regular fa-message"></i><span>Contact Us</span></a
+        >
+        <a href="test.html"><i class="fas fa-book"></i><span>Tests</span></a
+          >
+      </nav>
+    </div>
+
+    <section>
+      <h1 class="heading">Playlist</h1>
+      <h1 id="playlistName">Playlist Name</h1>
+      <img
+        id="playlistImage"
+        src=""
+        alt="Playlist Image"
+        class="playlist-image"
+      />
+      <p id="playlistDescription">Playlist Description</p>
+      <div id="videos" class="videos-container"></div>
+    </section>
+    <footer class="footer">
+      &copy; Copyright by <span>Pathshala.</span> | All rights reserved!
+    </footer>
+    <script>
+      let playlistId; // Define playlistId in the global scope
+
+      async function fetchPlaylistDetails() {
+        const urlParams = new URLSearchParams(window.location.search);
+        playlistId = urlParams.get("playlistId"); // Retrieve playlistId from URL
+
+        if (!playlistId) {
+          alert("No playlist ID found in URL.");
+          return;
+        }
+
+        try {
+          const response = await fetch(
+            `http://localhost:3000/api/playlists/${playlistId}`
+          );
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          const playlist = await response.json();
+
+          document.getElementById("playlistName").innerText = playlist.name;
+          document.getElementById(
+            "playlistImage"
+          ).src = `http://localhost:3000/uploads/${playlist.image.filename}`;
+          document.getElementById("playlistDescription").innerText =
+            playlist.description;
+
+          const videosContainer = document.getElementById("videos");
+          videosContainer.innerHTML = ""; // Clear existing videos
+
+          playlist.videos.forEach((video) => {
+            const videoDiv = document.createElement("div");
+            videoDiv.classList.add("video-item");
+
+            const videoUrl = `http://localhost:3000/uploads/${video.filename}`;
+            const thumbnailUrl = video.thumbnail
+              ? `http://localhost:3000/uploads/${video.thumbnail.filename}`
+              : "";
+
+            videoDiv.innerHTML = `
+                        <img src="${thumbnailUrl}" alt="Video Thumbnail" class="video-thumbnail" onclick="openVideo('${videoUrl}')">
+                        <p class="video-name">${
+                          video.heading || "Untitled Video"
+                        }</p>
+                    `;
+
+            videosContainer.appendChild(videoDiv);
+          });
+        } catch (error) {
+          console.error(error);
+          alert("An error occurred while fetching playlist details.");
+        }
+      }
+
+      function openVideo(videoUrl) {
+        if (videoUrl) {
+          window.open(videoUrl, "_blank");
+        } else {
+          alert("No video URL found.");
+        }
+      }
+
+      async function updatePlaylist() {
+        const playlistName = document.getElementById("playlistName").value;
+        const playlistImage = document.getElementById("playlistImage").files[0];
+        const playlistDescription = document.getElementById(
+          "playlistDescription"
+        ).value;
+        const videoFiles = document.getElementById("videoFiles").files;
+        const videoThumbnails = document.querySelectorAll(
+          ".video-thumbnail-input"
+        );
+        const videoHeadings = document.querySelectorAll(".videoHeadings");
+
+        if (playlistName.trim() === "") {
+          alert("Please enter a playlist name.");
+          return;
+        }
+
+        const formData = new FormData();
+        formData.append("playlistName", playlistName);
+        if (playlistImage) {
+          formData.append("playlistImage", playlistImage);
+        }
+        formData.append("playlistDescription", playlistDescription);
+
+        for (let i = 0; i < videoFiles.length; i++) {
+          console.log(`Video Heading ${i}:`, videoHeadings[i].value);
+          formData.append("videos", videoFiles[i]);
+          formData.append("videoHeadings", videoHeadings[i].value);
+          const thumbnailFile = videoThumbnails[i].files[0];
+          if (thumbnailFile) {
+            formData.append("videoThumbnails", thumbnailFile);
+          } else {
+            formData.append("videoThumbnails", null);
+          }
+        }
+
+        try {
+          const response = await fetch(
+            `http://localhost:3000/api/update/${playlistId}`,
+            {
+              // Use playlistId here
+              method: "POST",
+              body: formData,
+            }
+          );
+
+          if (response.ok) {
+            alert("Playlist updated successfully!");
+            fetchPlaylistDetails(); // Refresh the playlist details
+          } else {
+            alert("An error occurred. Please try again.");
+          }
+        } catch (error) {
+          console.error(error);
+          alert("An error occurred. Please try again.");
+        }
+      }
+
+      fetchPlaylistDetails();
+    </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        function updateProfileDisplay(profileData) {
+          document
+            .querySelectorAll(".profile .name")
+            .forEach((el) => (el.textContent = profileData.name));
+          document
+            .querySelectorAll(".profile .image")
+            .forEach((el) => (el.src = profileData.profilePic || ""));
+        }
+
+        function loadProfile() {
+          const profileData = JSON.parse(localStorage.getItem("profileData"));
+          if (profileData) {
+            updateProfileDisplay(profileData);
+          }
+        }
+
+        loadProfile();
+      });
+    </script>
+    <script src="js/script.js"></script>
+  </body>
+</html>
