@@ -1,0 +1,67 @@
+.contacts {
+    padding: 40px 20px;
+    text-align: center;
+    background-color: #fff;
+    transition: background-color 0.3s, color 0.3s;
+  }
+
+   .heading{
+    margin-top: 1.5rem;
+    text-align: center;
+  }
+
+  .contacts h2 {
+    font-size: 28px;
+    margin-bottom: 20px;
+    color: #333;
+  }
+
+  .messages-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .message-box {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 8px;
+    width: 80%;
+    max-width: 600px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: left;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+  }
+
+  .message-box h3 {
+    margin-top: 0;
+    font-size: 24px;
+    color: #007BFF;
+  }
+
+  .message-box p {
+    margin: 10px 0;
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  .message-box small {
+    color: #555;
+  }
+
+  .delete-btn{
+    background-color: red;
+  }
+
+  .footer {
+    text-align: center;
+   
+    position: relative;
+    bottom: 0;
+   
+  }
+  
