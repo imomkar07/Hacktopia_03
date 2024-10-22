@@ -1,1 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>View Notes</title>
+    <!-- Font Awesome CDN link -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css"
+    />
+    <link rel="stylesheet" href="./css/Admin_putting_notes.css" />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <header class="header">
+      <section class="flex">
+        <a href="home.html" class="logo">Pathshala.</a>
+
+        <form action="search.html" method="post"></form>
+
+        <div class="icons">
+          <div id="menu-btn" class="fas fa-bars"></div>
+          <div id="search-btn" class="fas fa-search"></div>
+          <div id="user-btn" class="fas fa-user"></div>
+          <div id="toggle-btn" class="fas fa-sun"></div>
+        </div>
+
+        <div class="profile">
+          <img src="" class="image" alt="user image" />
+          <h3 class="name">Default Name</h3>
+          <p class="role">student</p>
+        </div>
+      </section>
+    </header>
+
+    <div class="side-bar">
+      <div id="close-btn">
+        <i class="fas fa-times"></i>
+      </div>
+
+      <div class="profile">
+        <img src="" class="image" alt="user image" />
+        <h3 class="name">Default Name</h3>
+        <p class="role">student</p>
+      </div>
+
+      <nav class="navbar">
+        <a href="home.html"><i class="fas fa-home"></i><span>Home</span></a>
+        <a href="about.html"
+          ><i class="fas fa-question"></i><span>About</span></a
+        >
+        <a href="user.html"
+          ><i class="fas fa-graduation-cap"></i><span>Courses</span></a
+        >
+        <a href="teacher_profile1.html"
+          ><i class="fas fa-chalkboard-user"></i><span>Teachers</span></a
+        >
+        <a href="user_side_notes.html"
+          ><i class="fa-solid fa-note-sticky"></i><span>Notes</span></a
+        >
+        <a href="AI_helper.html"
+          ><img src="images/robotic.png" /><span>AI Helper</span></a
+        >
+        <a href="contact.html"
+          ><i class="fa-regular fa-message"></i><span>Contact Us</span></a
+        >
+      </nav>
+    </div>
+
+    <section id="user-section">
+      <h2>User Panel - View Notes</h2>
+      <div id="user-notes-container">
+        <!-- Note cards will be appended here -->
+      </div>
+    </section>
+
+    <script>
+      // Load notes from localStorage on page load
+      window.onload = function () {
+        const storedNotes = localStorage.getItem("notes");
+        if (storedNotes) {
+          const notes = JSON.parse(storedNotes);
+          displayNotes(notes);
+        }
+      };
+
+      // Display notes from the notes array
+      function displayNotes(notes) {
+        const userNotesContainer = document.getElementById(
+          "user-notes-container"
+        );
+        userNotesContainer.innerHTML = ""; // Clear previous view
+
+        notes.forEach((note) => {
+          const noteCard = document.createElement("div");
+          noteCard.className = "note-card";
+          noteCard.innerHTML = `
+                    <img src="${note.thumbnail}" alt="Thumbnail" class="note-icon" style="width: 100px; height: 100px;">
+                    <h3>${note.title}</h3>
+                    <button onclick="showNoteDetails('${note.title}')">View Details</button>
+                `;
+          userNotesContainer.appendChild(noteCard);
+        });
+      }
+
+      // Display note details
+      function showNoteDetails(title) {
+        const storedNotes = localStorage.getItem("notes");
+        if (storedNotes) {
+          const notes = JSON.parse(storedNotes);
+          const selectedNote = notes.find((note) => note.title === title);
+
+          if (selectedNote) {
+            const noteContent = document.createElement("div");
+            noteContent.className = "note-details";
+            noteContent.innerHTML = `
+                        <h4>${selectedNote.title}</h4>
+                        <img src="${
+                          selectedNote.thumbnail
+                        }" alt="Thumbnail" style="width: 150px;">
+                        <h5>Attached Files:</h5>
+                        <ul>
+                            ${selectedNote.files
+                              .map(
+                                (file) =>
+                                  `<li>${
+                                    file.name
+                                  }: <a href="${URL.createObjectURL(
+                                    file.file
+                                  )}" download="${
+                                    file.file.name
+                                  }">Download</a></li>`
+                              )
+                              .join("")}
+                        </ul>
+                        <button onclick="goBack()">Go Back</button>
+                    `;
+
+            const userNotesContainer = document.getElementById(
+              "user-notes-container"
+            );
+            userNotesContainer.innerHTML = ""; // Clear previous view
+            userNotesContainer.appendChild(noteContent);
+          }
+        }
+      }
+
+      // Return to the list of notes after viewing details
+      function goBack() {
+        const storedNotes = localStorage.getItem("notes");
+        if (storedNotes) {
+          const notes = JSON.parse(storedNotes);
+          displayNotes(notes); // Refresh notes display
+        }
+      }
+    </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        function updateProfileDisplay(profileData) {
+          document
+            .querySelectorAll(".profile .name")
+            .forEach((el) => (el.textContent = profileData.name));
+          document
+            .querySelectorAll(".profile .image")
+            .forEach((el) => (el.src = profileData.profilePic || ""));
+        }
+
+        function loadProfile() {
+          const profileData = JSON.parse(localStorage.getItem("profileData"));
+          if (profileData) {
+            updateProfileDisplay(profileData);
+          }
+        }
+
+        loadProfile();
+      });
+    </script>
+    <script src="js/script.js"></script>
+  </body>
+</html>
 
