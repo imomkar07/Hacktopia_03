@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      #root {
+        width: 100vw;
+        height: 100vh;
+      }
+      .buttons {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 20px;
+      }
+      .buttons button {
+        margin: 10px;
+        padding: 10px 20px;
+        font-size: 16px;
+      }
+    </style>
+    <title>Video Call App</title>
+  </head>
+  <body>
+    <div class="buttons" style="display: none">
+      <!-- Buttons will be inserted here by JavaScript -->
+    </div>
+    <div id="root" style="display: block"></div>
+
+    <script src="https://unpkg.com/@zegocloud/zego-uikit-prebuilt/zego-uikit-prebuilt.js"></script>
+    <script>
+      window.onload = function () {
+        function getUrlParams(url) {
+          const urlSearchParams = new URLSearchParams(url.split("?")[1]);
+          return Object.fromEntries(urlSearchParams.entries());
+        }
+
+        // Extract the roomID from the URL parameters
+        const params = getUrlParams(window.location.href);
+        const roomID = params.roomID || "default_room"; // Use 'default_room' if no roomID is provided
+
+        //while using remove below comment
+        const appID = 2033622700;
+        const serverSecret = "f535bf40bc9ac3c00c732f79bfe91779";
+
+        // Generate a unique user ID and username
+        const userID = Math.floor(Math.random() * 10000) + "";
+        const userName = "userName" + userID;
+
+        // Generate the Kit Token
+        const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(
+          appID,
+          serverSecret,
+          roomID,
+          userID,
+          userName
+        );
+
+        function startVideoCall() {
+          // Initialize ZegoUIKitPrebuilt
+          const zp = ZegoUIKitPrebuilt.create(kitToken);
+          zp.joinRoom({
+            container: document.querySelector("#root"),
+            sharedLinks: [
+              {
+                name: "Personal link",
+                url: `WEB_UIKITS.html?roomID=${roomID}`,
+              },
+            ],
+            scenario: {
+              mode: ZegoUIKitPrebuilt.VideoConference,
+            },
+            turnOnMicrophoneWhenJoining: true,
+            turnOnCameraWhenJoining: true,
+            showMyCameraToggleButton: true,
+            showMyMicrophoneToggleButton: true,
+            showAudioVideoSettingsButton: true,
+            showScreenSharingButton: true,
+            showTextChat: true,
+            showUserList: true,
+            maxUsers: 50,
+            layout: "Auto",
+            showLayoutButton: true,
+          });
+        }
+
+        // Call startVideoCall function when the page loads
+        startVideoCall();
+      };
+    </script>
+  </body>
+</html>

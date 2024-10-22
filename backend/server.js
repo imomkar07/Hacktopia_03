@@ -128,7 +128,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use(express.static(path.join(__dirname, '../frontend')));
 app.use(express.static(path.join(__dirname, '../frontend/css')));
 
-mongoose.connect('mongodb://localhost:27017/videoPlaylist', {
+mongoose.connect('mongodb://localhost:27017/PathshalaDB', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 });
